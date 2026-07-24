@@ -132,3 +132,46 @@ export function pickLang(obj, field, locale) {
     locale === "en" ? `${field}En` : locale === "hi" ? `${field}Hi` : `${field}Mr`;
   return obj[key] || obj[`${field}En`] || "";
 }
+
+export async function getDailyShlokaToday() {
+  const fallback = {
+    id: "fallback-shloka",
+    shloka: "यदा यदा हि धर्मस्य ग्लानिर्भवति भारत।\nअभ्युत्थानमधर्मस्य तदात्मानं सृजाम्यहम्॥",
+    translationEn: "Whenever there is a decline in righteousness and an increase in unrighteousness, O Arjuna, then I manifest Myself.",
+    translationHi: "जब-जब धर्म की हानि और अधर्म की वृद्धि होती है, तब-तब मैं अपने रूप को रचता हूँ अर्थात साकार रूप से प्रकट होता हूँ।",
+    translationMr: "जेव्हा जेव्हा धर्माचा ऱ्हास होतो आणि अधर्माची वाढ होते, तेव्हा तेव्हा मी अवतार धारण करतो.",
+  };
+
+  try {
+    const { db } = await import("@/db");
+    const { dailyShlokas } = await import("@/db/schema");
+    const { eq } = await import("drizzle-orm");
+
+    const todayStr = new Intl.DateTimeFormat("en-CA", {
+      timeZone: "Asia/Kolkata",
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    }).format(new Date());
+
+    // 1. Try to find a shloka pinned for today
+    const rows = await db
+      .select()
+      .from(dailyShlokas)
+      .where(eq(dailyShlokas.displayDate, todayStr))
+      .limit(1);
+
+    if (rows[0]) return rows[0];
+
+    // 2. If none, grab all shlokas and select one deterministically based on date day number
+    const all = await db.select().from(dailyShlokas);
+    if (all.length > 0) {
+      const dateHash = new Date(todayStr).getDate();
+      return all[dateHash % all.length];
+    }
+
+    return fallback;
+  } catch {
+    return fallback;
+  }
+}

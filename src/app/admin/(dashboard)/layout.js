@@ -8,6 +8,7 @@ const NAV = [
   { href: "/admin/panchang", label: "Daily Panchang" },
   { href: "/admin/muhurat", label: "Muhurat Dates" },
   { href: "/admin/testimonials", label: "Testimonials" },
+  { href: "/admin/shlokas", label: "Daily Shlokas" },
   { href: "/admin/gallery", label: "Gallery" },
   { href: "/admin/blog", label: "Articles" },
   { href: "/admin/inquiries", label: "Inquiries" },

@@ -36,24 +36,37 @@ export default function BookingForm({ dict, services, preselectedService }) {
   }
 
   if (status === "success") {
+    const selectedServiceLabel = services.find((s) => s.slug === form.serviceSlug)?.label || "Other Pooja";
+    const whatsappText = encodeURIComponent(
+      `Namaste Guruji,\n\nI would like to book an appointment. Here are my details:\n\n` +
+      `• *Name*: ${form.name}\n` +
+      `• *Phone*: ${form.phone}\n` +
+      `• *City*: ${form.city || "N/A"}\n` +
+      `• *Service*: ${selectedServiceLabel}\n` +
+      `• *Date*: ${form.date || "N/A"}\n` +
+      `• *Time*: ${form.time || "N/A"}\n` +
+      `• *Notes*: ${form.notes || "None"}`
+    );
+    const whatsappUrl = `https://wa.me/919823324839?text=${whatsappText}`;
+
     return (
       <div className="plaque p-8 text-center">
         <h2 className="text-brass text-xl mb-3 relative z-10">{dict.booking.successTitle}</h2>
         <p className="text-cream/90 mb-6 relative z-10">{dict.booking.successBody}</p>
-        <div className="flex justify-center gap-4 relative z-10">
+        <div className="flex flex-col sm:flex-row justify-center items-center gap-4 relative z-10">
           <a
             href="tel:+919823324839"
-            className="border border-brass text-brass hover:bg-brass hover:text-ink font-semibold px-5 py-2.5 rounded-md transition-colors"
+            className="w-full sm:w-auto border border-brass text-brass hover:bg-brass hover:text-ink font-semibold px-5 py-2.5 rounded-full transition-colors flex items-center justify-center gap-1"
           >
             {dict.booking.call}: +91 98233 24839
           </a>
           <a
-            href="https://wa.me/919823324839"
+            href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-[#25D366] text-ink font-semibold px-5 py-2.5 rounded-md"
+            className="w-full sm:w-auto bg-[#25D366] hover:bg-[#20ba56] text-black font-semibold px-5 py-2.5 rounded-full transition-colors flex items-center justify-center gap-2"
           >
-            {dict.booking.whatsapp}
+            💬 {dict.booking.whatsapp}
           </a>
         </div>
       </div>

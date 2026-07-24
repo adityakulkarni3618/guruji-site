@@ -190,3 +190,14 @@ export const inquiries = pgTable("inquiries", {
   isRead: boolean("is_read").default(false).notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
+
+// ---------- Daily Shlokas ----------
+export const dailyShlokas = pgTable("daily_shlokas", {
+  id: serial("id").primaryKey(),
+  shloka: text("shloka").notNull(),
+  translationEn: text("translation_en"),
+  translationHi: text("translation_hi"),
+  translationMr: text("translation_mr"),
+  displayDate: varchar("display_date", { length: 10 }), // YYYY-MM-DD
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});

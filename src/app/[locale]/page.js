@@ -1,18 +1,20 @@
 import Link from "next/link";
 import { getDictionary } from "@/i18n/dictionaries";
 import { getPanchangToday } from "@/lib/getPanchangToday";
-import { getServices, getTestimonials, pickLang } from "@/lib/content";
+import { getServices, getTestimonials, pickLang, getDailyShlokaToday } from "@/lib/content";
 import PanchangCard from "@/components/PanchangCard";
+import ShlokaCard from "@/components/ShlokaCard";
 
 export default async function HomePage({ params }) {
   const { locale } = await params;
   const dict = getDictionary(locale);
   const base = `/${locale}`;
 
-  const [panchang, services, testimonials] = await Promise.all([
+  const [panchang, services, testimonials, shloka] = await Promise.all([
     getPanchangToday(),
     getServices(),
     getTestimonials(),
+    getDailyShlokaToday(),
   ]);
 
   return (
@@ -46,6 +48,11 @@ export default async function HomePage({ params }) {
         <div className="flex justify-center lg:justify-end">
           <PanchangCard dict={dict} data={panchang} locale={locale} />
         </div>
+      </section>
+
+      {/* Shloka of the Day */}
+      <section className="max-w-6xl mx-auto px-6 py-6 flex justify-center">
+        <ShlokaCard data={shloka} locale={locale} dict={dict} />
       </section>
 
       {/* Services preview */}
