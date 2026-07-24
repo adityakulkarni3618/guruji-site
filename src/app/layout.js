@@ -27,9 +27,9 @@ const monoFont = JetBrains_Mono({
 });
 
 export const metadata = {
-  title: "Guruji Rahul Joshi | Jyotish, Vastu & Pooja Services",
+  title: "Sai Jyotish Kendra | Rahul Chandrakant Joshi-Harangulkar",
   description:
-    "Guruji Rahul Chandrakantrao Joshi — Ved, Jyotish, Vastu & Ratnashastra Visharad. Book poojas, vastu consultation, kundali reading, and gemstone guidance. Daily panchang & muhurat.",
+    "Sai Jyotish Kendra by Rahul Chandrakant Joshi-Harangulkar — Ved, Jyotish, Vastu & Ratnashastra Visharad. Book poojas, vastu consultation, kundali reading, and gemstone guidance. Daily panchang & muhurat.",
   manifest: "/manifest.json",
 };
 

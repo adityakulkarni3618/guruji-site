@@ -47,8 +47,8 @@ export default async function HomePage({ params }) {
           </div>
         </div>
 
-        <div className="flex justify-center lg:justify-end">
-          <PanchangCard dict={dict} data={panchang} locale={locale} />
+        <div className="flex justify-center lg:justify-end w-full">
+          <PanchangCard dict={dict} data={panchang} locale={locale} isCompact={true} />
         </div>
       </section>
 

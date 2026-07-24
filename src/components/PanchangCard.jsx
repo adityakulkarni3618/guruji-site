@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const EXPLANATIONS = {
   en: {
@@ -29,16 +29,77 @@ const EXPLANATIONS = {
   }
 };
 
-export default function PanchangCard({ dict, data, locale }) {
+export default function PanchangCard({ dict, data, locale, isCompact = false }) {
   const [expandedRow, setExpandedRow] = useState(null);
+  const [mounted, setMounted] = useState(false);
+  const [currentTime, setCurrentTime] = useState("");
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isCompact) return;
+    const updateTime = () => {
+      setCurrentTime(
+        new Date().toLocaleTimeString(
+          locale === "en" ? "en-IN" : locale === "hi" ? "hi-IN" : "mr-IN",
+          { hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: true }
+        )
+      );
+    };
+    updateTime();
+    const interval = setInterval(updateTime, 1000);
+    return () => clearInterval(interval);
+  }, [isCompact, locale]);
 
   const dateLabel = new Date(data.date).toLocaleDateString(
     locale === "en" ? "en-IN" : locale === "hi" ? "hi-IN" : "mr-IN",
     { day: "numeric", month: "long", year: "numeric" }
   );
 
+  const weekdayLabel = new Date(data.date).toLocaleDateString(
+    locale === "en" ? "en-IN" : locale === "hi" ? "hi-IN" : "mr-IN",
+    { weekday: "long" }
+  );
+
+  const tithiLabel = `${data.paksha ? data.paksha + " · " : ""}${data.tithi}`;
+
+  if (isCompact) {
+    return (
+      <div className="plaque p-6 max-w-sm w-full rise-in relative overflow-hidden text-center border border-brass/20">
+        <div className="relative z-10 space-y-4">
+          <div>
+            <h3 className="text-brass text-xs font-semibold tracking-wider uppercase">
+              {dict.panchang.title}
+            </h3>
+            <div className="w-12 h-[1px] bg-brass/30 mx-auto mt-1.5"></div>
+          </div>
+          
+          <div className="space-y-1 select-none">
+            <div className="text-cream text-lg font-semibold">{weekdayLabel}</div>
+            <div className="text-cream-dim text-xs font-numeral">{dateLabel}</div>
+          </div>
+
+          {mounted && currentTime ? (
+            <div className="text-brass text-2xl font-mono tracking-widest font-semibold bg-ink-2/50 py-2 px-3 rounded border border-brass/10 min-h-[44px] flex items-center justify-center select-none">
+              {currentTime}
+            </div>
+          ) : (
+            <div className="min-h-[44px]"></div>
+          )}
+
+          <div className="border-t border-ink-3 pt-3 flex justify-between items-center text-[13px]">
+            <span className="text-cream-dim">{dict.panchang.tithi}:</span>
+            <span className="text-cream font-medium font-numeral">{tithiLabel}</span>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   const rows = [
-    ["tithi", dict.panchang.tithi, `${data.paksha ? data.paksha + " · " : ""}${data.tithi}`],
+    ["tithi", dict.panchang.tithi, tithiLabel],
     ["nakshatra", dict.panchang.nakshatra, data.nakshatra],
     ["yoga", dict.panchang.yoga, data.yoga],
     ["karan", dict.panchang.karan, data.karan],

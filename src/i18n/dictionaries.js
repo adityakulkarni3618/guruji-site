@@ -29,8 +29,8 @@ export const dictionaries = {
       reiki: "Reiki & Akashic Reading",
     },
     home: {
-      heroTitle: "Guruji Rahul Joshi",
-      heroSubtitle: "Ved, Jyotish, Vastu & Ratnashastra Visharad — Shri Vidya Upasak",
+      heroTitle: "Sai Jyotish Kendra",
+      heroSubtitle: "Rahul Chandrakant Joshi-Harangulkar",
       heroCta: "Book an Appointment",
       panchangCta: "View Today's Panchang",
       servicesHeading: "Our Services",
@@ -107,8 +107,8 @@ export const dictionaries = {
       reiki: "रेकी एवं आकाशिक रीडिंग",
     },
     home: {
-      heroTitle: "गुरुजी राहुल जोशी",
-      heroSubtitle: "वेद, ज्योतिष, वास्तु व रत्नशास्त्र विशारद — श्री विद्या उपासक",
+      heroTitle: "साई ज्योतिष केंद्र",
+      heroSubtitle: "राहुल चंद्रकांत जोशी-हारंगुळकर",
       heroCta: "अपॉइंटमेंट बुक करें",
       panchangCta: "आज का पंचांग देखें",
       servicesHeading: "हमारी सेवाएं",
@@ -185,8 +185,8 @@ export const dictionaries = {
       reiki: "रेकी व आकाशिक रीडिंग",
     },
     home: {
-      heroTitle: "गुरुजी राहुल जोशी",
-      heroSubtitle: "वेद, ज्योतिष, वास्तू व रत्नशास्त्र विशारद — श्री विद्या उपासक",
+      heroTitle: "साई ज्योतिष केंद्र",
+      heroSubtitle: "राहुल चंद्रकांत जोशी-हारंगुळकर",
       heroCta: "अपॉइंटमेंट बुक करा",
       panchangCta: "आजचे पंचांग पहा",
       servicesHeading: "आमच्या सेवा",
