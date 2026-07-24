@@ -12,6 +12,53 @@ const bookingSchema = z.object({
   notes: z.string().optional(),
 });
 
+async function sendBookingEmail(data, serviceName) {
+  const apiKey = process.env.RESEND_API_KEY;
+  const toEmail = process.env.ADMIN_EMAIL || "rahuljoshi031986@gmail.com";
+  
+  if (!apiKey) {
+    console.log("⚠️ [bookings] RESEND_API_KEY is not configured. Skipping email dispatch. Booking details:", data);
+    return;
+  }
+
+  try {
+    const response = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${apiKey}`,
+      },
+      body: JSON.stringify({
+        from: "Guruji Bookings <onboarding@resend.dev>",
+        to: toEmail,
+        subject: `New Pooja Booking Request - ${data.name}`,
+        html: `
+          <h3>New Pooja Booking Request</h3>
+          <p>A devotee has submitted an appointment request on the website.</p>
+          <hr />
+          <p><strong>Name:</strong> ${data.name}</p>
+          <p><strong>Phone:</strong> ${data.phone}</p>
+          <p><strong>Email:</strong> ${data.email || "N/A"}</p>
+          <p><strong>City:</strong> ${data.city || "N/A"}</p>
+          <p><strong>Service:</strong> ${serviceName || "Other"}</p>
+          <p><strong>Preferred Date:</strong> ${data.date || "N/A"}</p>
+          <p><strong>Preferred Time:</strong> ${data.time || "N/A"}</p>
+          <p><strong>Notes:</strong> ${data.notes || "None"}</p>
+        `,
+      }),
+    });
+
+    if (!response.ok) {
+      const errText = await response.text();
+      console.error("[bookings] Resend API error details:", errText);
+    } else {
+      console.log(`[bookings] Notification email dispatched successfully to ${toEmail}`);
+    }
+  } catch (err) {
+    console.error("[bookings] Email dispatch failed:", err.message);
+  }
+}
+
 export async function POST(request) {
   const body = await request.json();
   const parsed = bookingSchema.safeParse(body);
@@ -28,9 +75,11 @@ export async function POST(request) {
     const { eq } = await import("drizzle-orm");
 
     let serviceId = null;
+    let serviceName = "Other Pooja";
     if (data.serviceSlug) {
       const rows = await db.select().from(services).where(eq(services.slug, data.serviceSlug)).limit(1);
       serviceId = rows[0]?.id || null;
+      serviceName = rows[0]?.nameEn || "Other Pooja";
     }
 
     await db.insert(bookings).values({
@@ -44,13 +93,14 @@ export async function POST(request) {
       notes: data.notes || null,
     });
 
+    // Trigger email notification in background
+    sendBookingEmail(data, serviceName);
+
     return NextResponse.json({ ok: true });
   } catch (err) {
     console.error("[bookings] DB not configured or insert failed:", err.message);
-    // Still return success to the user in dev/demo mode when DB isn't wired
-    // up yet, so the UI flow can be reviewed end-to-end before Supabase is
-    // connected. In production with DATABASE_URL set, real failures will
-    // still surface via the console log above.
+    // Trigger background email even if DB insert fails in demo mode
+    sendBookingEmail(data, "Other Pooja");
     return NextResponse.json({ ok: true, warning: "not_persisted" });
   }
 }

@@ -1,3 +1,5 @@
+export const revalidate = 60;
+
 import { getDictionary } from "@/i18n/dictionaries";
 import { getPanchangToday } from "@/lib/getPanchangToday";
 import { DEFAULT_LOCATION } from "@/lib/panchang";

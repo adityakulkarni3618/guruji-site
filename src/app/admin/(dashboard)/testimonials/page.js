@@ -70,23 +70,58 @@ export default function AdminTestimonialsPage() {
       </form>
 
       {items && (
-        <div className="space-y-3">
-          {items.map((t) => (
-            <div key={t.id} className="border border-ink-3 rounded-md p-4 flex justify-between items-start gap-4">
-              <div>
-                <div className="text-cream font-semibold">{t.customerName} {t.city ? `· ${t.city}` : ""}</div>
-                <p className="text-cream-dim text-sm italic">"{t.textEn}"</p>
-              </div>
-              <div className="flex gap-3 shrink-0 text-sm">
-                <button onClick={() => toggleApprove(t.id, t.isApproved)} className="text-brass hover:underline">
-                  {t.isApproved ? "Unpublish" : "Publish"}
-                </button>
-                <button onClick={() => handleDelete(t.id)} className="text-sindoor-light hover:underline">
-                  Delete
-                </button>
-              </div>
+        <div className="space-y-8 max-w-3xl">
+          {/* Pending Queue */}
+          <div>
+            <h2 className="text-xl text-brass mb-4 font-semibold">Pending Approval ({items.filter(t => !t.isApproved).length})</h2>
+            <div className="space-y-3">
+              {items.filter(t => !t.isApproved).map((t) => (
+                <div key={t.id} className="border border-sindoor/30 bg-ink-2/30 rounded-md p-4 flex justify-between items-start gap-4">
+                  <div>
+                    <div className="text-cream font-semibold">{t.customerName} {t.city ? `· ${t.city}` : ""}</div>
+                    <p className="text-cream-dim text-sm italic">"{t.textEn}"</p>
+                  </div>
+                  <div className="flex gap-3 shrink-0 text-sm">
+                    <button onClick={() => toggleApprove(t.id, t.isApproved)} className="text-[#25D366] hover:underline font-semibold cursor-pointer">
+                      Approve
+                    </button>
+                    <button onClick={() => handleDelete(t.id)} className="text-sindoor-light hover:underline cursor-pointer">
+                      Reject
+                    </button>
+                  </div>
+                </div>
+              ))}
+              {items.filter(t => !t.isApproved).length === 0 && (
+                <p className="text-cream-dim text-sm italic">No pending testimonials to review.</p>
+              )}
             </div>
-          ))}
+          </div>
+
+          {/* Approved List */}
+          <div>
+            <h2 className="text-xl text-cream mb-4 font-semibold">Approved & Published ({items.filter(t => t.isApproved).length})</h2>
+            <div className="space-y-3">
+              {items.filter(t => t.isApproved).map((t) => (
+                <div key={t.id} className="border border-ink-3 rounded-md p-4 flex justify-between items-start gap-4 bg-ink-2/10">
+                  <div>
+                    <div className="text-cream font-semibold">{t.customerName} {t.city ? `· ${t.city}` : ""}</div>
+                    <p className="text-cream-dim text-sm italic">"{t.textEn}"</p>
+                  </div>
+                  <div className="flex gap-3 shrink-0 text-sm">
+                    <button onClick={() => toggleApprove(t.id, t.isApproved)} className="text-brass hover:underline cursor-pointer">
+                      Unpublish
+                    </button>
+                    <button onClick={() => handleDelete(t.id)} className="text-sindoor-light hover:underline cursor-pointer">
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              ))}
+              {items.filter(t => t.isApproved).length === 0 && (
+                <p className="text-cream-dim text-sm italic">No published testimonials.</p>
+              )}
+            </div>
+          </div>
         </div>
       )}
 

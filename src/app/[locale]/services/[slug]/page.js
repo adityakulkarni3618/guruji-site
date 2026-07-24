@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getDictionary } from "@/i18n/dictionaries";
 import { getServiceBySlug, pickLang } from "@/lib/content";
+import SamagriChecklist from "@/components/SamagriChecklist";
 
 export default async function ServiceDetailPage({ params }) {
   const { locale, slug } = await params;
@@ -36,16 +37,7 @@ export default async function ServiceDetailPage({ params }) {
       </div>
 
       {samagri.length > 0 && (
-        <div className="plaque p-5 mb-8">
-          <h2 className="text-brass text-lg mb-3 relative z-10">{dict.common.samagriRequired}</h2>
-          <ul className="relative z-10 grid sm:grid-cols-2 gap-2 text-cream/90 text-sm list-disc list-inside">
-            {samagri.map((item, i) => (
-              <li key={i}>
-                {pickLang(item, "item", locale) || item.itemEn || item.item} {item.qty ? `— ${item.qty}` : ""}
-              </li>
-            ))}
-          </ul>
-        </div>
+        <SamagriChecklist samagri={samagri} dict={dict} locale={locale} />
       )}
 
       {service.pdfUrl && (

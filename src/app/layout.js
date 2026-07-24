@@ -30,6 +30,7 @@ export const metadata = {
   title: "Guruji Rahul Joshi | Jyotish, Vastu & Pooja Services",
   description:
     "Guruji Rahul Chandrakantrao Joshi — Ved, Jyotish, Vastu & Ratnashastra Visharad. Book poojas, vastu consultation, kundali reading, and gemstone guidance. Daily panchang & muhurat.",
+  manifest: "/manifest.json",
 };
 
 export default function RootLayout({ children }) {
