@@ -47,14 +47,16 @@ export default function SiteHeader({ locale, dict }) {
 
       <div className="flex items-center justify-between px-4 md:px-6 py-3">
         <Link href={base} className="flex items-center gap-3">
-          <div className="w-11 h-11 rounded-full plaque flex items-center justify-center font-display text-brass text-lg">
+          <div className="w-10 h-10 rounded-full border border-brass flex items-center justify-center font-display text-brass text-lg bg-ink-2/40 shadow-inner">
             ॐ
           </div>
-          <div className="leading-tight">
-            <div className="font-display text-lg text-cream">{dict.home.heroTitle}</div>
-            <div className="text-[11px] text-cream-dim hidden sm:block">
+          <div className="flex flex-col justify-center">
+            <span className="font-display text-[17px] font-semibold text-cream leading-none">
+              {dict.home.heroTitle}
+            </span>
+            <span className="text-[10.5px] text-cream-dim hidden sm:block tracking-wide leading-none mt-1.5">
               {dict.home.heroSubtitle}
-            </div>
+            </span>
           </div>
         </Link>
 
