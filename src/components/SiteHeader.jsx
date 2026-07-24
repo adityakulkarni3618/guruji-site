@@ -133,7 +133,7 @@ export default function SiteHeader({ locale, dict }) {
           </div>
           <Link
             href={`${base}/book`}
-            className="hidden sm:inline-flex items-center justify-center bg-sindoor hover:bg-sindoor-light text-cream text-xs font-semibold px-4.5 h-[32px] rounded-full transition-colors border border-sindoor"
+            className="hidden sm:inline-flex items-center justify-center bg-sindoor hover:bg-brass hover:text-ink text-cream text-xs font-semibold px-4.5 h-[32px] rounded-full transition-colors border border-sindoor hover:border-brass"
           >
             {dict.nav.book}
           </Link>

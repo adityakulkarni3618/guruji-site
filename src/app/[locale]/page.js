@@ -30,7 +30,7 @@ export default async function HomePage({ params }) {
           <div className="flex flex-wrap gap-3">
             <Link
               href={`${base}/book`}
-              className="bg-sindoor hover:bg-sindoor-light text-cream font-semibold px-6 py-3 rounded-md transition-colors"
+              className="bg-sindoor hover:bg-brass hover:text-ink text-cream font-semibold px-6 py-3 rounded-md transition-colors"
             >
               {dict.home.heroCta}
             </Link>
