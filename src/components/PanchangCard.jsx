@@ -67,31 +67,40 @@ export default function PanchangCard({ dict, data, locale, isCompact = false }) 
 
   if (isCompact) {
     return (
-      <div className="plaque p-6 max-w-sm w-full rise-in relative overflow-hidden text-center border border-brass/20">
+      <div className="bg-ink-2 border border-brass/20 rounded-2xl p-6 max-w-sm w-full text-center shadow-2xl relative overflow-hidden rise-in">
+        {/* Subtle decorative gold light flare/gradient at the top */}
+        <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-brass/10 via-brass/40 to-brass/10"></div>
+        
         <div className="relative z-10 space-y-4">
           <div>
-            <h3 className="text-brass text-xs font-semibold tracking-wider uppercase">
+            <span className="text-[10px] tracking-widest text-brass/80 font-bold uppercase block">
               {dict.panchang.title}
-            </h3>
-            <div className="w-12 h-[1px] bg-brass/30 mx-auto mt-1.5"></div>
+            </span>
+            <div className="w-10 h-[1px] bg-brass/30 mx-auto mt-2"></div>
           </div>
           
           <div className="space-y-1 select-none">
-            <div className="text-cream text-lg font-semibold">{weekdayLabel}</div>
-            <div className="text-cream-dim text-xs font-numeral">{dateLabel}</div>
+            <div className="text-cream text-xl font-display font-medium tracking-wide">
+              {weekdayLabel}
+            </div>
+            <div className="text-cream-dim text-xs font-numeral tracking-wide">
+              {dateLabel}
+            </div>
           </div>
 
           {mounted && currentTime ? (
-            <div className="text-brass text-2xl font-mono tracking-widest font-semibold bg-ink-2/50 py-2 px-3 rounded border border-brass/10 min-h-[44px] flex items-center justify-center select-none">
-              {currentTime}
+            <div className="text-brass text-2xl font-mono tracking-widest font-bold bg-ink/60 border border-brass/20 py-2.5 px-4 rounded-xl shadow-inner flex items-center justify-center select-none min-h-[48px]">
+              {currentTime.toUpperCase()}
             </div>
           ) : (
-            <div className="min-h-[44px]"></div>
+            <div className="min-h-[48px]"></div>
           )}
 
-          <div className="border-t border-ink-3 pt-3 flex justify-between items-center text-[13px]">
-            <span className="text-cream-dim">{dict.panchang.tithi}:</span>
-            <span className="text-cream font-medium font-numeral">{tithiLabel}</span>
+          <div className="border-t border-ink-3/60 pt-4 flex justify-between items-center text-xs">
+            <span className="text-cream-dim font-medium">{dict.panchang.tithi}</span>
+            <span className="text-brass font-semibold font-numeral bg-brass/10 border border-brass/20 px-3 py-1 rounded-full text-[11px]">
+              {tithiLabel}
+            </span>
           </div>
         </div>
       </div>
