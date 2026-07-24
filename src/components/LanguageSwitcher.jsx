@@ -23,7 +23,7 @@ export default function LanguageSwitcher({ locale }) {
       <button
         type="button"
         onClick={() => setOpen(!open)}
-        className="flex items-center gap-1 text-xs border border-ink-3 rounded-full px-3.5 py-1.5 text-cream-dim hover:text-cream hover:border-brass transition-colors cursor-pointer"
+        className="flex items-center justify-center gap-1 text-xs border border-ink-3 rounded-full px-3.5 h-[32px] text-cream-dim hover:text-cream hover:border-brass bg-ink-2/30 transition-colors cursor-pointer"
         aria-label="Select Language"
       >
         <span>🌐 {LABELS[locale]}</span> <span className="text-[10px] text-cream-dim ml-0.5">▾</span>
