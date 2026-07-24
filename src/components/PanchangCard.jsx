@@ -80,25 +80,25 @@ export default function PanchangCard({ dict, data, locale, isCompact = false }) 
           </div>
           
           <div className="space-y-1 select-none">
-            <div className="text-cream text-xl font-display font-medium tracking-wide">
+            <div className="text-cream text-2xl font-display font-semibold tracking-wide">
               {weekdayLabel}
             </div>
-            <div className="text-cream-dim text-xs font-numeral tracking-wide">
+            <div className="text-cream-dim text-sm font-numeral tracking-wide">
               {dateLabel}
             </div>
           </div>
 
           {mounted && currentTime ? (
-            <div className="text-brass text-2xl font-mono tracking-widest font-bold bg-ink/60 border border-brass/20 py-2.5 px-4 rounded-xl shadow-inner flex items-center justify-center select-none min-h-[48px]">
+            <div className="text-brass text-xl font-mono tracking-widest font-bold bg-ink/60 border border-brass/20 py-2 px-4 rounded-xl shadow-inner flex items-center justify-center select-none min-h-[40px]">
               {currentTime.toUpperCase()}
             </div>
           ) : (
-            <div className="min-h-[48px]"></div>
+            <div className="min-h-[40px]"></div>
           )}
 
-          <div className="border-t border-ink-3/60 pt-4 flex justify-between items-center text-xs">
+          <div className="border-t border-ink-3/60 pt-4 flex justify-between items-center text-sm">
             <span className="text-cream-dim font-medium">{dict.panchang.tithi}</span>
-            <span className="text-brass font-semibold font-numeral bg-brass/10 border border-brass/20 px-3 py-1 rounded-full text-[11px]">
+            <span className="text-brass font-semibold font-numeral bg-brass/10 border border-brass/20 px-3 py-1 rounded-full text-xs">
               {tithiLabel}
             </span>
           </div>
