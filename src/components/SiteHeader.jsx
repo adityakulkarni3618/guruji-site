@@ -8,6 +8,7 @@ export default function SiteHeader({ locale, dict }) {
   const [servicesOpen, setServicesOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [theme, setTheme] = useState("dusk");
+  const [themeOpen, setThemeOpen] = useState(false);
   const base = `/${locale}`;
 
   useEffect(() => {
@@ -93,37 +94,40 @@ export default function SiteHeader({ locale, dict }) {
 
         <div className="flex items-center gap-3">
           <LanguageSwitcher locale={locale} />
-          <div className="flex items-center gap-1 text-[11px] border border-ink-3 rounded-full p-0.5">
+          <div className="relative">
             <button
               type="button"
-              onClick={() => changeTheme("dusk")}
-              className={`px-2 py-1 rounded-full transition-colors ${
-                theme === "dusk" ? "bg-brass text-ink font-semibold" : "text-cream-dim hover:text-cream"
-              }`}
-              title="Dusk Theme"
+              onClick={() => setThemeOpen(!themeOpen)}
+              className="flex items-center gap-1 text-xs border border-ink-3 rounded-full px-3 py-1.5 text-cream-dim hover:text-cream hover:border-brass transition-colors cursor-pointer"
+              aria-label="Select Theme"
             >
-              🌆 <span className="hidden sm:inline ml-0.5">Dusk</span>
+              {theme === "dusk" ? "🌆 Dusk" : theme === "dawn" ? "🌅 Dawn" : "🌿 Forest"} <span className="text-[10px] text-cream-dim ml-0.5">▾</span>
             </button>
-            <button
-              type="button"
-              onClick={() => changeTheme("dawn")}
-              className={`px-2 py-1 rounded-full transition-colors ${
-                theme === "dawn" ? "bg-brass text-ink font-semibold" : "text-cream-dim hover:text-cream"
-              }`}
-              title="Dawn Theme"
-            >
-              🌅 <span className="hidden sm:inline ml-0.5">Dawn</span>
-            </button>
-            <button
-              type="button"
-              onClick={() => changeTheme("forest")}
-              className={`px-2 py-1 rounded-full transition-colors ${
-                theme === "forest" ? "bg-brass text-ink font-semibold" : "text-cream-dim hover:text-cream"
-              }`}
-              title="Forest Theme"
-            >
-              🌿 <span className="hidden sm:inline ml-0.5">Forest</span>
-            </button>
+            {themeOpen && (
+              <div className="absolute right-0 top-full mt-2 w-32 bg-ink-2 border border-ink-3 rounded-md shadow-xl py-1 z-50 animate-in fade-in slide-in-from-top-1 duration-200">
+                <button
+                  type="button"
+                  onClick={() => { changeTheme("dusk"); setThemeOpen(false); }}
+                  className="w-full text-left px-3 py-1.5 text-xs text-cream hover:text-brass hover:bg-ink-3 transition-colors flex items-center gap-2"
+                >
+                  🌆 Dusk
+                </button>
+                <button
+                  type="button"
+                  onClick={() => { changeTheme("dawn"); setThemeOpen(false); }}
+                  className="w-full text-left px-3 py-1.5 text-xs text-cream hover:text-brass hover:bg-ink-3 transition-colors flex items-center gap-2"
+                >
+                  🌅 Dawn
+                </button>
+                <button
+                  type="button"
+                  onClick={() => { changeTheme("forest"); setThemeOpen(false); }}
+                  className="w-full text-left px-3 py-1.5 text-xs text-cream hover:text-brass hover:bg-ink-3 transition-colors flex items-center gap-2"
+                >
+                  🌿 Forest
+                </button>
+              </div>
+            )}
           </div>
           <Link
             href={`${base}/book`}
