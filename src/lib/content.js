@@ -12,6 +12,8 @@ const SEED_SERVICES = [
     nameHi: "वास्तु शांति",
     nameMr: "वास्तु शांती",
     shortDescEn: "Remedial vastu ritual to remove doshas from home or office.",
+    shortDescHi: "घर या कार्यालय से दोषों को दूर करने के लिए सुधारात्मक वास्तु अनुष्ठान।",
+    shortDescMr: "घर किंवा कार्यालयातील दोष दूर करण्यासाठी वास्तुशांती विधी.",
     priceNote: null,
   },
   {
@@ -22,6 +24,8 @@ const SEED_SERVICES = [
     nameHi: "कालसर्प शांति",
     nameMr: "कालसर्प शांती",
     shortDescEn: "Remedial pooja for Kalsarp dosha in the birth chart.",
+    shortDescHi: "जन्म कुंडली में कालसर्प दोष के लिए निवारण पूजा।",
+    shortDescMr: "जन्मपत्रिकेतील कालसर्प दोषासाठी निवारण पूजा.",
     priceNote: null,
   },
   {
@@ -32,6 +36,8 @@ const SEED_SERVICES = [
     nameHi: "सप्तशती पाठ हवन (नवचंडी)",
     nameMr: "सप्तशती पाठ हवन (नवचंडी)",
     shortDescEn: "Navchandi havan with Durga Saptashati recitation.",
+    shortDescHi: "दुर्गा सप्तशती पाठ के साथ नवचंडी हवन।",
+    shortDescMr: "दुर्गा सप्तशती पठण आणि नवचंडी हवन विधी.",
     priceNote: null,
   },
   {
@@ -42,6 +48,8 @@ const SEED_SERVICES = [
     nameHi: "जन्म कुंडली एवं मार्गदर्शन",
     nameMr: "जन्मकुंडली व मार्गदर्शन",
     shortDescEn: "Computer-generated birth chart with personal guidance.",
+    shortDescHi: "कंप्यूटर जनित जन्म कुंडली और व्यक्तिगत मार्गदर्शन।",
+    shortDescMr: "संगणकीकृत जन्मकुंडली आणि वैयक्तिक मार्गदर्शन.",
     priceNote: null,
   },
   {
@@ -52,6 +60,8 @@ const SEED_SERVICES = [
     nameHi: "रत्न सुझाव",
     nameMr: "रत्न सूचन",
     shortDescEn: "Certified gemstone recommendation based on your kundali.",
+    shortDescHi: "आपकी कुंडली के आधार पर प्रमाणित रत्न सुझाव।",
+    shortDescMr: "तुमच्या कुंडलीवर आधारित प्रमाणित रत्न सूचन.",
     priceNote: null,
   },
   {
@@ -62,6 +72,8 @@ const SEED_SERVICES = [
     nameHi: "रेकी एवं आकाशिक रिकॉर्ड रीडिंग",
     nameMr: "रेकी व आकाशिक रेकॉर्ड रीडिंग",
     shortDescEn: "Energy healing and akashic record reading sessions.",
+    shortDescHi: "ऊर्जा हीलिंग और आकाशिक रिकॉर्ड रीडिंग सत्र।",
+    shortDescMr: "ऊर्जा उपचार आणि आकाशिक रेकॉर्ड वाचन सत्र.",
     priceNote: null,
   },
 ];
