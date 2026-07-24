@@ -105,22 +105,25 @@ export async function getServiceBySlug(slug) {
 }
 
 export async function getTestimonials() {
+  const fallback = [
+    {
+      id: "seed-t1",
+      customerName: "Devotee, Latur",
+      textEn: "Guruji's vastu guidance brought real peace to our new home.",
+      textHi: "गुरुजी के वास्तु मार्गदर्शन से हमारे नए घर में सच्ची शांति आई।",
+      textMr: "गुरुजींच्या वास्तु मार्गदर्शनामुळे आमच्या नव्या घरात खरी शांती आली.",
+      rating: 5,
+    },
+  ];
+
   try {
     const { db } = await import("@/db");
     const { testimonials } = await import("@/db/schema");
     const rows = await db.select().from(testimonials);
-    return rows.filter((t) => t.isApproved);
+    const active = rows.filter((t) => t.isApproved);
+    return active.length > 0 ? active : fallback;
   } catch {
-    return [
-      {
-        id: "seed-t1",
-        customerName: "Devotee, Latur",
-        textEn: "Guruji's vastu guidance brought real peace to our new home.",
-        textHi: "गुरुजी के वास्तु मार्गदर्शन से हमारे नए घर में सच्ची शांति आई।",
-        textMr: "गुरुजींच्या वास्तु मार्गदर्शनामुळे आमच्या नव्या घरात खरी शांती आली.",
-        rating: 5,
-      },
-    ];
+    return fallback;
   }
 }
 
