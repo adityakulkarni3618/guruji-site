@@ -19,7 +19,17 @@ function fmtTime(date) {
  */
 export async function getPanchangToday() {
   const today = new Date();
-  const todayStr = today.toISOString().slice(0, 10);
+  
+  // Get current date string in YYYY-MM-DD format based on Indian Standard Time (IST)
+  const todayStr = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Asia/Kolkata",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).format(today);
+
+  // Set calculation time to 6:00 AM IST of that day (traditional panchang sunrise baseline)
+  const calcDate = new Date(`${todayStr}T06:00:00+05:30`);
 
   try {
     const { db } = await import("@/db");
@@ -52,7 +62,7 @@ export async function getPanchangToday() {
     // DB not reachable/configured yet — fall through to live calculation.
   }
 
-  const computed = calculatePanchang(today, DEFAULT_LOCATION.latitude, DEFAULT_LOCATION.longitude);
+  const computed = calculatePanchang(calcDate, DEFAULT_LOCATION.latitude, DEFAULT_LOCATION.longitude);
   return {
     date: todayStr,
     tithi: computed.tithi,

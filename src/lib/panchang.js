@@ -105,7 +105,7 @@ export function calculatePanchang(date, latitude, longitude) {
   const dayMs = dayEnd.getTime() - dayStart.getTime();
   const segment = dayMs / 8;
 
-  const weekday = date.getUTCDay(); // 0 = Sunday ... 6 = Saturday
+  const weekday = date.getDay(); // 0 = Sunday ... 6 = Saturday
 
   // Segment index (0-7) for Rahu Kaal by weekday (traditional table)
   const rahuSegmentByDay = [7, 1, 6, 4, 5, 3, 2]; // Sun..Sat -> segment index (1-based slot)
