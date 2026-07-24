@@ -93,16 +93,38 @@ export default function SiteHeader({ locale, dict }) {
 
         <div className="flex items-center gap-3">
           <LanguageSwitcher locale={locale} />
-          <select
-            value={theme}
-            onChange={(e) => changeTheme(e.target.value)}
-            className="bg-ink-2 border border-ink-3 text-cream text-xs rounded px-2 py-1.5 focus:outline-none focus:border-brass cursor-pointer"
-            aria-label="Select Theme"
-          >
-            <option value="dusk" className="bg-ink text-cream">🌆 Dusk</option>
-            <option value="dawn" className="bg-[#fdfaf2] text-[#201712]">🌅 Dawn</option>
-            <option value="forest" className="bg-[#112217] text-[#f2f7f3]">🌿 Forest</option>
-          </select>
+          <div className="flex items-center gap-1 text-[11px] border border-ink-3 rounded-full p-0.5">
+            <button
+              type="button"
+              onClick={() => changeTheme("dusk")}
+              className={`px-2 py-1 rounded-full transition-colors ${
+                theme === "dusk" ? "bg-brass text-ink font-semibold" : "text-cream-dim hover:text-cream"
+              }`}
+              title="Dusk Theme"
+            >
+              🌆 <span className="hidden sm:inline ml-0.5">Dusk</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => changeTheme("dawn")}
+              className={`px-2 py-1 rounded-full transition-colors ${
+                theme === "dawn" ? "bg-brass text-ink font-semibold" : "text-cream-dim hover:text-cream"
+              }`}
+              title="Dawn Theme"
+            >
+              🌅 <span className="hidden sm:inline ml-0.5">Dawn</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => changeTheme("forest")}
+              className={`px-2 py-1 rounded-full transition-colors ${
+                theme === "forest" ? "bg-brass text-ink font-semibold" : "text-cream-dim hover:text-cream"
+              }`}
+              title="Forest Theme"
+            >
+              🌿 <span className="hidden sm:inline ml-0.5">Forest</span>
+            </button>
+          </div>
           <Link
             href={`${base}/book`}
             className="hidden sm:inline-block bg-sindoor hover:bg-sindoor-light text-cream text-sm font-semibold px-4 py-2 rounded-md transition-colors"
