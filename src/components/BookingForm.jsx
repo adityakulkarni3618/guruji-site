@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-export default function BookingForm({ dict, services, preselectedService }) {
+export default function BookingForm({ dict, services, preselectedService, initialDate = "", initialTime = "" }) {
   const [status, setStatus] = useState("idle"); // idle | submitting | success | error
   const [form, setForm] = useState({
     name: "",
@@ -10,10 +10,18 @@ export default function BookingForm({ dict, services, preselectedService }) {
     email: "",
     city: "",
     serviceSlug: preselectedService || "",
-    date: "",
-    time: "",
+    date: initialDate,
+    time: initialTime,
     notes: "",
   });
+
+  useEffect(() => {
+    if (initialDate) setForm((f) => ({ ...f, date: initialDate }));
+  }, [initialDate]);
+
+  useEffect(() => {
+    if (initialTime) setForm((f) => ({ ...f, time: initialTime }));
+  }, [initialTime]);
 
   function update(field, value) {
     setForm((f) => ({ ...f, [field]: value }));
