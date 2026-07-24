@@ -29,7 +29,7 @@ export const dictionaries = {
       reiki: "Reiki & Akashic Reading",
     },
     home: {
-      heroTitle: "Sai Jyotish Kendra",
+      heroTitle: "Sai Shakti Jyotish Kendra",
       heroSubtitle: "Rahul Chandrakant Joshi-Harangulkar",
       heroCta: "Book an Appointment",
       panchangCta: "View Today's Panchang",
@@ -107,7 +107,7 @@ export const dictionaries = {
       reiki: "रेकी एवं आकाशिक रीडिंग",
     },
     home: {
-      heroTitle: "साई ज्योतिष केंद्र",
+      heroTitle: "साई शक्ति ज्योतिष केंद्र",
       heroSubtitle: "राहुल चंद्रकांत जोशी-हारंगुळकर",
       heroCta: "अपॉइंटमेंट बुक करें",
       panchangCta: "आज का पंचांग देखें",
@@ -185,7 +185,7 @@ export const dictionaries = {
       reiki: "रेकी व आकाशिक रीडिंग",
     },
     home: {
-      heroTitle: "साई ज्योतिष केंद्र",
+      heroTitle: "साई शक्ती ज्योतिष केंद्र",
       heroSubtitle: "राहुल चंद्रकांत जोशी-हारंगुळकर",
       heroCta: "अपॉइंटमेंट बुक करा",
       panchangCta: "आजचे पंचांग पहा",
