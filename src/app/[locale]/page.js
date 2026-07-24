@@ -29,7 +29,7 @@ export default async function HomePage({ params }) {
           <p className="text-brass tracking-wide text-sm mb-3">
             ॐ श्री गजानन प्रसन्न · श्री तुळजाभवानी प्रसन्न
           </p>
-          <h1 className="text-4xl md:text-5xl text-cream mb-3">{dict.home.heroTitle}</h1>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl text-cream mb-3 md:whitespace-nowrap">{dict.home.heroTitle}</h1>
           <p className="text-cream-dim text-lg mb-8">{dict.home.heroSubtitle}</p>
           <div className="flex flex-wrap gap-3">
             <Link
