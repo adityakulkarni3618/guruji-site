@@ -41,19 +41,47 @@ export default async function ServiceDetailPage({ params }) {
           <ul className="relative z-10 grid sm:grid-cols-2 gap-2 text-cream/90 text-sm list-disc list-inside">
             {samagri.map((item, i) => (
               <li key={i}>
-                {item.itemEn || item.item} {item.qty ? `— ${item.qty}` : ""}
+                {pickLang(item, "item", locale) || item.itemEn || item.item} {item.qty ? `— ${item.qty}` : ""}
               </li>
             ))}
           </ul>
         </div>
       )}
 
-      <Link
-        href={`${base}/book?service=${service.slug}`}
-        className="inline-block bg-sindoor hover:bg-sindoor-light text-cream font-semibold px-6 py-3 rounded-md transition-colors"
-      >
-        {dict.nav.book}
-      </Link>
+      {service.pdfUrl && (
+        <div className="mb-8 p-4 bg-ink-2 border border-ink-3 rounded-md flex items-center justify-between">
+          <div>
+            <h3 className="font-semibold text-cream text-sm">📖 Study Material / Pooja PDF</h3>
+            <p className="text-xs text-cream-dim mt-0.5">Read or download the PDF guide for this pooja.</p>
+          </div>
+          <a
+            href={service.pdfUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-brass hover:bg-brass-light text-ink font-semibold text-xs px-4 py-2 rounded-md transition-colors"
+          >
+            View PDF
+          </a>
+        </div>
+      )}
+
+      {pickLang(service, "aarti", locale) && (
+        <div className="plaque p-6 mb-8">
+          <h2 className="text-brass text-lg mb-4 relative z-10">🕉️ Aarti / Stotra / Readings</h2>
+          <pre className="relative z-10 text-cream/90 text-sm whitespace-pre-wrap font-sans leading-relaxed text-center italic bg-ink/30 p-4 rounded border border-ink-3">
+            {pickLang(service, "aarti", locale)}
+          </pre>
+        </div>
+      )}
+
+      <div className="flex gap-4">
+        <Link
+          href={`${base}/book?service=${service.slug}`}
+          className="inline-block bg-sindoor hover:bg-sindoor-light text-cream font-semibold px-6 py-3 rounded-md transition-colors"
+        >
+          {dict.nav.book}
+        </Link>
+      </div>
     </div>
   );
 }

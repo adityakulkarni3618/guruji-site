@@ -61,6 +61,10 @@ export const services = pgTable("services", {
   priceNote: varchar("price_note", { length: 200 }), // e.g. "Contact for pricing"
 
   imageUrl: text("image_url"),
+  pdfUrl: text("pdf_url"),
+  aartiEn: text("aarti_en"),
+  aartiHi: text("aarti_hi"),
+  aartiMr: text("aarti_mr"),
   isActive: boolean("is_active").default(true).notNull(),
   sortOrder: integer("sort_order").default(0).notNull(),
 

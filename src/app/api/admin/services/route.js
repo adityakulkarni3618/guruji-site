@@ -38,6 +38,10 @@ export async function POST(request) {
       price: body.price || null,
       priceNote: body.priceNote || null,
       imageUrl: body.imageUrl || null,
+      pdfUrl: body.pdfUrl || null,
+      aartiEn: body.aartiEn || null,
+      aartiHi: body.aartiHi || null,
+      aartiMr: body.aartiMr || null,
       isActive: body.isActive ?? true,
       sortOrder: body.sortOrder || 0,
     })

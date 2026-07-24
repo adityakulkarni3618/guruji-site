@@ -34,6 +34,10 @@ export default function ServiceForm({ initial, serviceId }) {
       price: "",
       priceNote: "",
       imageUrl: "",
+      pdfUrl: "",
+      aartiEn: "",
+      aartiHi: "",
+      aartiMr: "",
       isActive: true,
     }
   );
@@ -142,6 +146,15 @@ export default function ServiceForm({ initial, serviceId }) {
               className="input"
             />
           </Field>
+          <Field label={`Aarti / Stotra / Readable Text (${activeLang})`}>
+            <textarea
+              rows={6}
+              placeholder="Enter Aarti, Stotra or reading materials..."
+              value={form[`aarti${activeLang}`] || ""}
+              onChange={(e) => update(`aarti${activeLang}`, e.target.value)}
+              className="input"
+            />
+          </Field>
         </div>
       </div>
 
@@ -218,9 +231,19 @@ export default function ServiceForm({ initial, serviceId }) {
         </Field>
       </div>
 
-      <Field label="Image URL (optional)">
-        <input value={form.imageUrl || ""} onChange={(e) => update("imageUrl", e.target.value)} className="input" />
-      </Field>
+      <div className="grid sm:grid-cols-2 gap-4">
+        <Field label="Image URL (optional)">
+          <input value={form.imageUrl || ""} onChange={(e) => update("imageUrl", e.target.value)} className="input" />
+        </Field>
+        <Field label="PDF / Readable Material URL (optional)">
+          <input
+            value={form.pdfUrl || ""}
+            onChange={(e) => update("pdfUrl", e.target.value)}
+            className="input"
+            placeholder="e.g. Google Drive link to PDF"
+          />
+        </Field>
+      </div>
 
       <label className="flex items-center gap-2 text-sm text-cream-dim">
         <input
