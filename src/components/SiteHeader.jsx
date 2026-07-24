@@ -1,13 +1,26 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import LanguageSwitcher from "./LanguageSwitcher";
 
 export default function SiteHeader({ locale, dict }) {
   const [servicesOpen, setServicesOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [theme, setTheme] = useState("dusk");
   const base = `/${locale}`;
+
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("site-theme") || "dusk";
+    setTheme(savedTheme);
+    document.documentElement.setAttribute("data-theme", savedTheme);
+  }, []);
+
+  const changeTheme = (newTheme) => {
+    setTheme(newTheme);
+    document.documentElement.setAttribute("data-theme", newTheme);
+    localStorage.setItem("site-theme", newTheme);
+  };
 
   const navLink = (href, label) => (
     <Link
@@ -80,6 +93,16 @@ export default function SiteHeader({ locale, dict }) {
 
         <div className="flex items-center gap-3">
           <LanguageSwitcher locale={locale} />
+          <select
+            value={theme}
+            onChange={(e) => changeTheme(e.target.value)}
+            className="bg-ink-2 border border-ink-3 text-cream text-xs rounded px-2 py-1.5 focus:outline-none focus:border-brass cursor-pointer"
+            aria-label="Select Theme"
+          >
+            <option value="dusk" className="bg-ink text-cream">🌆 Dusk</option>
+            <option value="dawn" className="bg-[#fdfaf2] text-[#201712]">🌅 Dawn</option>
+            <option value="forest" className="bg-[#112217] text-[#f2f7f3]">🌿 Forest</option>
+          </select>
           <Link
             href={`${base}/book`}
             className="hidden sm:inline-block bg-sindoor hover:bg-sindoor-light text-cream text-sm font-semibold px-4 py-2 rounded-md transition-colors"

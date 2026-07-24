@@ -21,6 +21,32 @@
   --foreground: var(--color-cream);
 }
 
+/* Sacred Dawn (Light Theme) */
+html[data-theme="dawn"] {
+  --color-ink: #fdfaf2;        /* warm ivory/apricot */
+  --color-ink-2: #f4edd9;      /* card surface */
+  --color-ink-3: #e8dbb8;      /* card hover / border */
+  --color-brass: #b37e1b;      /* darker brass for contrast */
+  --color-brass-light: #d89f2d;
+  --color-sindoor: #be3939;    /* saffron-red CTA */
+  --color-sindoor-light: #d44c4c;
+  --color-cream: #201712;      /* dark text for light mode */
+  --color-cream-dim: #5c4b40;
+}
+
+/* Forest Hermitage (Dark Green Theme) */
+html[data-theme="forest"] {
+  --color-ink: #112217;        /* deep forest green */
+  --color-ink-2: #1c3324;      /* card surface */
+  --color-ink-3: #284733;      /* hover / border */
+  --color-brass: #c9a24b;      /* brass accent */
+  --color-brass-light: #e3c67a;
+  --color-sindoor: #9a3f3f;    /* crimson red */
+  --color-sindoor-light: #b85454;
+  --color-cream: #f2f7f3;      /* light mint text */
+  --color-cream-dim: #c5d4c8;
+}
+
 @theme inline {
   --color-ink: var(--color-ink);
   --color-ink-2: var(--color-ink-2);
