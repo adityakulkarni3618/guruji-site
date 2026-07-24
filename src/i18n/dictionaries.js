@@ -108,7 +108,7 @@ export const dictionaries = {
     },
     home: {
       heroTitle: "साई शक्ति ज्योतिष केंद्र",
-      heroSubtitle: "राहुल चंद्रकांत जोशी-हारंगुळकर",
+      heroSubtitle: "राहुल चंद्रकांत जोशी-हरंगुळकर",
       heroCta: "अपॉइंटमेंट बुक करें",
       panchangCta: "आज का पंचांग देखें",
       servicesHeading: "हमारी सेवाएं",
@@ -186,7 +186,7 @@ export const dictionaries = {
     },
     home: {
       heroTitle: "साई शक्ती ज्योतिष केंद्र",
-      heroSubtitle: "राहुल चंद्रकांत जोशी-हारंगुळकर",
+      heroSubtitle: "राहुल चंद्रकांत जोशी-हरंगुळकर",
       heroCta: "अपॉइंटमेंट बुक करा",
       panchangCta: "आजचे पंचांग पहा",
       servicesHeading: "आमच्या सेवा",
