@@ -14,7 +14,6 @@ export default function EditBlogPage() {
 
   return (
     <div>
-      <h1 className="text-2xl text-cream mb-6">Edit Article</h1>
       {post ? <BlogForm initial={post} postId={id} /> : <p className="text-cream-dim">Loading…</p>}
     </div>
   );

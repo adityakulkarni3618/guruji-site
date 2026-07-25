@@ -16,7 +16,6 @@ export default function EditServicePage() {
 
   return (
     <div>
-      <h1 className="text-2xl text-cream mb-6">Edit Service / Pooja</h1>
       {service ? <ServiceForm initial={service} serviceId={id} /> : <p className="text-cream-dim">Loading…</p>}
     </div>
   );

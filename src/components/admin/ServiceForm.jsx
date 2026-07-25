@@ -98,74 +98,79 @@ export default function ServiceForm({ initial, serviceId }) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6 max-w-3xl">
-      {error && <p className="text-sindoor-light">{error}</p>}
+    <div className="space-y-6">
+      <h1 className="text-2xl text-cream mb-6 select-none font-display">
+        {serviceId ? dict.admin.editServiceHeader : dict.admin.addServiceHeader}
+      </h1>
 
-      <div className="grid sm:grid-cols-2 gap-4">
-        <Field label={dict.admin.slug}>
-          <input required value={form.slug} onChange={(e) => update("slug", e.target.value)} className="input" />
-        </Field>
-        <Field label={dict.admin.categoryLabel}>
-          <select value={form.category} onChange={(e) => update("category", e.target.value)} className="input">
-            {CATEGORIES.map((c) => (
-              <option key={c} value={c}>{c}</option>
+      <form onSubmit={handleSubmit} className="space-y-6 max-w-3xl">
+        {error && <p className="text-sindoor-light">{error}</p>}
+
+        <div className="grid sm:grid-cols-2 gap-4">
+          <Field label={dict.admin.slug}>
+            <input required value={form.slug} onChange={(e) => update("slug", e.target.value)} className="input" />
+          </Field>
+          <Field label={dict.admin.categoryLabel}>
+            <select value={form.category} onChange={(e) => update("category", e.target.value)} className="input">
+              {CATEGORIES.map((c) => (
+                <option key={c} value={c}>{c}</option>
+              ))}
+            </select>
+          </Field>
+        </div>
+
+        {/* Language tabs for name/short description/full description */}
+        <div>
+          <div className="flex gap-2 mb-3">
+            {LANGS.map((l) => (
+              <button
+                type="button"
+                key={l.key}
+                onClick={() => setActiveLang(l.key)}
+                className={`px-3 py-1.5 rounded-md text-sm border ${
+                  activeLang === l.key ? "bg-brass text-ink border-brass" : "border-ink-3 text-cream-dim"
+                }`}
+              >
+                {l.label}
+              </button>
             ))}
-          </select>
-        </Field>
-      </div>
+          </div>
 
-      {/* Language tabs for name/short description/full description */}
-      <div>
-        <div className="flex gap-2 mb-3">
-          {LANGS.map((l) => (
-            <button
-              type="button"
-              key={l.key}
-              onClick={() => setActiveLang(l.key)}
-              className={`px-3 py-1.5 rounded-md text-sm border ${
-                activeLang === l.key ? "bg-brass text-ink border-brass" : "border-ink-3 text-cream-dim"
-              }`}
-            >
-              {l.label}
-            </button>
-          ))}
+          <div className="space-y-3">
+            <Field label={`${dict.admin.formName} (${activeLang === "En" ? "English" : activeLang === "Hi" ? "हिंदी" : "मराठी"})${activeLang === "En" ? " *" : ""}`}>
+              <input
+                required={activeLang === "En"}
+                value={form[`name${activeLang}`] || ""}
+                onChange={(e) => update(`name${activeLang}`, e.target.value)}
+                className="input"
+              />
+            </Field>
+            <Field label={`${dict.admin.formShortDesc} (${activeLang === "En" ? "English" : activeLang === "Hi" ? "हिंदी" : "मराठी"})`}>
+              <input
+                value={form[`shortDesc${activeLang}`] || ""}
+                onChange={(e) => update(`shortDesc${activeLang}`, e.target.value)}
+                className="input"
+              />
+            </Field>
+            <Field label={`${dict.admin.formDesc} (${activeLang === "En" ? "English" : activeLang === "Hi" ? "हिंदी" : "मराठी"})`}>
+              <textarea
+                rows={4}
+                value={form[`description${activeLang}`] || ""}
+                onChange={(e) => update(`description${activeLang}`, e.target.value)}
+                className="input"
+              />
+            </Field>
+            <Field label={`${dict.admin.formAarti} (${activeLang === "En" ? "English" : activeLang === "Hi" ? "हिंदी" : "मराठी"})`}>
+              <textarea
+                rows={6}
+                placeholder={dict.admin.aartiPlaceholder}
+                value={form[`aarti${activeLang}`] || ""}
+                onChange={(e) => update(`aarti${activeLang}`, e.target.value)}
+                className="input"
+              />
+            </Field>
+          </div>
         </div>
-
-        <div className="space-y-3">
-          <Field label={`Name (${activeLang})${activeLang === "En" ? " *" : ""}`}>
-            <input
-              required={activeLang === "En"}
-              value={form[`name${activeLang}`] || ""}
-              onChange={(e) => update(`name${activeLang}`, e.target.value)}
-              className="input"
-            />
-          </Field>
-          <Field label={`Short Description (${activeLang})`}>
-            <input
-              value={form[`shortDesc${activeLang}`] || ""}
-              onChange={(e) => update(`shortDesc${activeLang}`, e.target.value)}
-              className="input"
-            />
-          </Field>
-          <Field label={`Full Description (${activeLang})`}>
-            <textarea
-              rows={4}
-              value={form[`description${activeLang}`] || ""}
-              onChange={(e) => update(`description${activeLang}`, e.target.value)}
-              className="input"
-            />
-          </Field>
-          <Field label={`Aarti / Stotra / Readable Text (${activeLang})`}>
-            <textarea
-              rows={6}
-              placeholder="Enter Aarti, Stotra or reading materials..."
-              value={form[`aarti${activeLang}`] || ""}
-              onChange={(e) => update(`aarti${activeLang}`, e.target.value)}
-              className="input"
-            />
-          </Field>
-        </div>
-      </div>
 
       {/* Samagri list */}
       <div>
@@ -291,6 +296,7 @@ export default function ServiceForm({ initial, serviceId }) {
         }
       `}</style>
     </form>
+    </div>
   );
 }
 

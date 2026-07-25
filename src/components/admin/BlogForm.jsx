@@ -46,51 +46,56 @@ export default function BlogForm({ initial, postId }) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 max-w-3xl">
-      <label className="block">
-        <span className="block text-sm text-cream-dim mb-1">{dict.admin.slugBlog}</span>
-        <input required value={form.slug} onChange={(e) => update("slug", e.target.value)} className="input" />
-      </label>
+    <div className="space-y-6">
+      <h1 className="text-2xl text-cream mb-6 select-none font-display">
+        {postId ? dict.admin.editArticleHeader : dict.admin.addArticleHeader}
+      </h1>
 
-      <div className="flex gap-2">
-        {LANGS.map((l) => (
-          <button
-            type="button"
-            key={l.key}
-            onClick={() => setActiveLang(l.key)}
-            className={`px-3 py-1.5 rounded-md text-sm border ${activeLang === l.key ? "bg-brass text-ink border-brass" : "border-ink-3 text-cream-dim"}`}
-          >
-            {l.label}
-          </button>
-        ))}
-      </div>
+      <form onSubmit={handleSubmit} className="space-y-4 max-w-3xl">
+        <label className="block">
+          <span className="block text-sm text-cream-dim mb-1">{dict.admin.slugBlog}</span>
+          <input required value={form.slug} onChange={(e) => update("slug", e.target.value)} className="input" />
+        </label>
 
-      <label className="block">
-        <span className="block text-sm text-cream-dim mb-1">{dict.admin.titleLabel} ({activeLang})</span>
-        <input
-          value={form[`title${activeLang}`] || ""}
-          onChange={(e) => update(`title${activeLang}`, e.target.value)}
-          className="input"
-        />
-      </label>
-      <label className="block">
-        <span className="block text-sm text-cream-dim mb-1">{dict.admin.bodyLabel} ({activeLang})</span>
-        <textarea
-          rows={10}
-          value={form[`body${activeLang}`] || ""}
-          onChange={(e) => update(`body${activeLang}`, e.target.value)}
-          className="input"
-        />
-      </label>
+        <div className="flex gap-2">
+          {LANGS.map((l) => (
+            <button
+              type="button"
+              key={l.key}
+              onClick={() => setActiveLang(l.key)}
+              className={`px-3 py-1.5 rounded-md text-sm border ${activeLang === l.key ? "bg-brass text-ink border-brass" : "border-ink-3 text-cream-dim"}`}
+            >
+              {l.label}
+            </button>
+          ))}
+        </div>
 
-      <label className="block">
-        <span className="block text-sm text-cream-dim mb-1">{dict.admin.coverImageLabel}</span>
-        <input value={form.coverImageUrl || ""} onChange={(e) => update("coverImageUrl", e.target.value)} className="input" />
-        <FileUploadHelper
-          onUploadComplete={(url) => update("coverImageUrl", url)}
-          accept="image/*"
-        />
-      </label>
+        <label className="block">
+          <span className="block text-sm text-cream-dim mb-1">{dict.admin.titleLabel} ({activeLang === "En" ? "English" : activeLang === "Hi" ? "हिंदी" : "मराठी"})</span>
+          <input
+            value={form[`title${activeLang}`] || ""}
+            onChange={(e) => update(`title${activeLang}`, e.target.value)}
+            className="input"
+          />
+        </label>
+        <label className="block">
+          <span className="block text-sm text-cream-dim mb-1">{dict.admin.bodyLabel} ({activeLang === "En" ? "English" : activeLang === "Hi" ? "हिंदी" : "मराठी"})</span>
+          <textarea
+            rows={10}
+            value={form[`body${activeLang}`] || ""}
+            onChange={(e) => update(`body${activeLang}`, e.target.value)}
+            className="input"
+          />
+        </label>
+
+        <label className="block">
+          <span className="block text-sm text-cream-dim mb-1">{dict.admin.coverImageLabel}</span>
+          <input value={form.coverImageUrl || ""} onChange={(e) => update("coverImageUrl", e.target.value)} className="input" />
+          <FileUploadHelper
+            onUploadComplete={(url) => update("coverImageUrl", url)}
+            accept="image/*"
+          />
+        </label>
 
       <label className="flex items-center gap-2 text-sm text-cream-dim cursor-pointer select-none">
         <input type="checkbox" checked={form.isPublished} onChange={(e) => update("isPublished", e.target.checked)} />
@@ -113,6 +118,7 @@ export default function BlogForm({ initial, postId }) {
         }
       `}</style>
     </form>
+    </div>
   );
 }
 
