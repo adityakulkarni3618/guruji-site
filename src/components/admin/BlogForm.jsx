@@ -143,13 +143,14 @@ function FileUploadHelper({ onUploadComplete, accept = "image/*" }) {
       });
 
       if (!res.ok) {
-        throw new Error("Upload failed");
+        const errorData = await res.json().catch(() => ({}));
+        throw new Error(errorData.error || "Upload failed");
       }
 
       const data = await res.json();
       onUploadComplete(data.url);
     } catch (err) {
-      setError("Failed to upload file");
+      setError(err.message);
       console.error(err);
     } finally {
       setUploading(false);
