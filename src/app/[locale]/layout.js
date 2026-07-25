@@ -19,7 +19,7 @@ export default async function LocaleLayout({ children, params }) {
       <SiteHeader locale={locale} dict={dict} />
       <main className="flex-1">{children}</main>
       <SiteFooter locale={locale} dict={dict} />
-      <WhatsAppButton />
+      <WhatsAppButton locale={locale} />
     </div>
   );
 }

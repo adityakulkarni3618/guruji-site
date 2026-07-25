@@ -2,32 +2,79 @@
 
 import { useState } from "react";
 
-export default function WhatsAppButton() {
-  const [isOpen, setIsOpen] = useState(false);
-  const phone = "919823324839";
-
-  const options = [
+const OPTIONS = {
+  en: [
     {
       label: "Book Pooja / Service",
       icon: "🕉️",
-      text: "Namaste Guruji, I would like to book a Pooja or Vastu consultation. Please guide me.",
+      text: "Namaste Guruji 🙏\n\nI would like to book a Pooja or Vastu consultation. Please guide me about the process and availability.",
     },
     {
       label: "Janam Kundali Reading",
       icon: "🔮",
-      text: "Namaste Guruji, I would like to schedule a personal Janam Kundali reading session.",
+      text: "Namaste Guruji 🙏\n\nI would like to schedule a personal Janam Kundali reading session. Please let me know your available timings.",
     },
     {
       label: "Vastu Shastra Inquiry",
       icon: "🏠",
-      text: "Namaste Guruji, I want to consult you regarding Vastu Shastra for my home/office.",
+      text: "Namaste Guruji 🙏\n\nI want to consult you regarding Vastu Shastra for my home / office. Please guide me.",
     },
     {
-      label: "General Chat",
+      label: "General Inquiry",
       icon: "💬",
-      text: "Namaste Guruji,",
+      text: "Namaste Guruji 🙏\n\nI have a query and would like to speak with you at your convenience.",
     },
-  ];
+  ],
+  hi: [
+    {
+      label: "पूजा / सेवा बुक करें",
+      icon: "🕉️",
+      text: "नमस्ते गुरुजी 🙏\n\nमैं एक पूजा या वास्तु परामर्श बुक करना चाहता/चाहती हूँ। कृपया प्रक्रिया और उपलब्धता के बारे में बताएं।",
+    },
+    {
+      label: "जन्म कुंडली वाचन",
+      icon: "🔮",
+      text: "नमस्ते गुरुजी 🙏\n\nमैं व्यक्तिगत जन्म कुंडली वाचन के लिए समय निश्चित करना चाहता/चाहती हूँ। कृपया उपलब्ध समय बताएं।",
+    },
+    {
+      label: "वास्तु शास्त्र परामर्श",
+      icon: "🏠",
+      text: "नमस्ते गुरुजी 🙏\n\nमैं अपने घर / कार्यालय के लिए वास्तु शास्त्र के बारे में परामर्श लेना चाहता/चाहती हूँ। कृपया मार्गदर्शन करें।",
+    },
+    {
+      label: "सामान्य पूछताछ",
+      icon: "💬",
+      text: "नमस्ते गुरुजी 🙏\n\nमुझे एक प्रश्न पूछना है। कृपया सुविधा अनुसार बात करें।",
+    },
+  ],
+  mr: [
+    {
+      label: "पूजा / सेवा बुक करा",
+      icon: "🕉️",
+      text: "नमस्कार गुरुजी 🙏\n\nमला एक पूजा किंवा वास्तु सल्लामसलत बुक करायची आहे. कृपया प्रक्रिया आणि उपलब्धतेबद्दल माहिती द्या.",
+    },
+    {
+      label: "जन्मकुंडली वाचन",
+      icon: "🔮",
+      text: "नमस्कार गुरुजी 🙏\n\nमला वैयक्तिक जन्मकुंडली वाचनासाठी वेळ निश्चित करायचा आहे. कृपया उपलब्ध वेळ सांगा.",
+    },
+    {
+      label: "वास्तुशास्त्र सल्ला",
+      icon: "🏠",
+      text: "नमस्कार गुरुजी 🙏\n\nमला माझ्या घर / कार्यालयासाठी वास्तुशास्त्राबाबत सल्ला घ्यायचा आहे. कृपया मार्गदर्शन करा.",
+    },
+    {
+      label: "सामान्य चौकशी",
+      icon: "💬",
+      text: "नमस्कार गुरुजी 🙏\n\nमला एक प्रश्न विचारायचा आहे. कृपया सवडीनुसार बोलू.",
+    },
+  ],
+};
+
+export default function WhatsAppButton({ locale = "en" }) {
+  const [isOpen, setIsOpen] = useState(false);
+  const phone = "919823324839";
+  const options = OPTIONS[locale] || OPTIONS.en;
 
   return (
     <>
