@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { requireAdmin } from "@/lib/requireAdmin";
+import { revalidatePublicPages } from "@/lib/revalidatePages";
 
 export async function GET(request, { params }) {
   const session = await requireAdmin(request);
@@ -25,6 +26,7 @@ export async function PUT(request, { params }) {
     .set({ ...body, publishedAt: body.isPublished ? new Date() : null })
     .where(eq(blogPosts.id, Number(id)))
     .returning();
+  revalidatePublicPages("blog", row?.slug || body.slug);
   return NextResponse.json(row);
 }
 
@@ -36,5 +38,6 @@ export async function DELETE(request, { params }) {
   const { blogPosts } = await import("@/db/schema");
   const { eq } = await import("drizzle-orm");
   await db.delete(blogPosts).where(eq(blogPosts.id, Number(id)));
+  revalidatePublicPages("blog");
   return NextResponse.json({ ok: true });
 }

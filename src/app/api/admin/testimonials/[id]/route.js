@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { requireAdmin } from "@/lib/requireAdmin";
+import { revalidatePublicPages } from "@/lib/revalidatePages";
 
 export async function PUT(request, { params }) {
   const session = await requireAdmin(request);
@@ -14,6 +15,7 @@ export async function PUT(request, { params }) {
     .set({ isApproved: body.isApproved })
     .where(eq(testimonials.id, Number(id)))
     .returning();
+  revalidatePublicPages("testimonial");
   return NextResponse.json(row);
 }
 
@@ -25,5 +27,6 @@ export async function DELETE(request, { params }) {
   const { testimonials } = await import("@/db/schema");
   const { eq } = await import("drizzle-orm");
   await db.delete(testimonials).where(eq(testimonials.id, Number(id)));
+  revalidatePublicPages("testimonial");
   return NextResponse.json({ ok: true });
 }

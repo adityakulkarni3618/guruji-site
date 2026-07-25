@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { requireAdmin } from "@/lib/requireAdmin";
+import { revalidatePublicPages } from "@/lib/revalidatePages";
 
 async function getDb() {
   const { db } = await import("@/db");
@@ -57,6 +58,7 @@ export async function PUT(request, { params }) {
     .where(eq(services.id, Number(id)))
     .returning();
 
+  revalidatePublicPages("service", row?.slug || body.slug);
   return NextResponse.json(row);
 }
 
@@ -67,5 +69,6 @@ export async function DELETE(request, { params }) {
   const { id } = await params;
   const { db, services, eq } = await getDb();
   await db.delete(services).where(eq(services.id, Number(id)));
+  revalidatePublicPages("service");
   return NextResponse.json({ ok: true });
 }

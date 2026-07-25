@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { requireAdmin } from "@/lib/requireAdmin";
+import { revalidatePublicPages } from "@/lib/revalidatePages";
 
 export async function GET(request) {
   const session = await requireAdmin(request);
@@ -47,5 +48,6 @@ export async function POST(request) {
     })
     .returning();
 
+  revalidatePublicPages("service", body.slug);
   return NextResponse.json(row);
 }

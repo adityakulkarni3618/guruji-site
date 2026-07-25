@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { requireAdmin } from "@/lib/requireAdmin";
+import { revalidatePublicPages } from "@/lib/revalidatePages";
 
 export async function GET(request) {
   const session = await requireAdmin(request);
@@ -18,5 +19,6 @@ export async function POST(request) {
   const { db } = await import("@/db");
   const { testimonials } = await import("@/db/schema");
   const [row] = await db.insert(testimonials).values(body).returning();
+  revalidatePublicPages("testimonial");
   return NextResponse.json(row);
 }
