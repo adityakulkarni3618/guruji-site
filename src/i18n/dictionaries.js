@@ -19,6 +19,12 @@ export const dictionaries = {
       testimonials: "Testimonials",
       blog: "Articles",
       contact: "Contact",
+      shlokas: "Daily Shlokas",
+    },
+    shlokas: {
+      title: "Daily Shlokas & Thoughts",
+      subtitle: "A collection of sacred Sanskrit shlokas with Hindi, Marathi, and English translations.",
+      noShlokas: "No shlokas found in the archive.",
     },
     servicesMenu: {
       pooja: "Poojas",
@@ -97,6 +103,12 @@ export const dictionaries = {
       testimonials: "प्रतिक्रियाएं",
       blog: "लेख",
       contact: "संपर्क करें",
+      shlokas: "दैनिक श्लोक",
+    },
+    shlokas: {
+      title: "दैनिक श्लोक और विचार",
+      subtitle: "हिंदी, मराठी और अंग्रेजी अनुवाद के साथ पवित्र संस्कृत श्लोकों का संग्रह।",
+      noShlokas: "संग्रह में कोई श्लोक नहीं मिला।",
     },
     servicesMenu: {
       pooja: "पूजा",
@@ -175,6 +187,12 @@ export const dictionaries = {
       testimonials: "अभिप्राय",
       blog: "लेख",
       contact: "संपर्क",
+      shlokas: "दैनिक श्लोक",
+    },
+    shlokas: {
+      title: "दैनिक श्लोक आणि विचार",
+      subtitle: "हिंदी, मराठी आणि इंग्रजी भाषांतरासह पवित्र संस्कृत श्लोकांचा संग्रह.",
+      noShlokas: "संग्रहात कोणतेही श्लोक आढळले नाहीत.",
     },
     servicesMenu: {
       pooja: "पूजा",

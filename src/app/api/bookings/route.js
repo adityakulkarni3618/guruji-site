@@ -13,11 +13,50 @@ const bookingSchema = z.object({
 });
 
 async function sendBookingEmail(data, serviceName) {
+  const subject = `New Pooja Booking Request - ${data.name}`;
+  const text = `
+New Pooja Booking Request
+A devotee has submitted an appointment request on the website.
+
+Name: ${data.name}
+Phone: ${data.phone}
+Email: ${data.email || "N/A"}
+City: ${data.city || "N/A"}
+Service: ${serviceName || "Other"}
+Preferred Date: ${data.date || "N/A"}
+Preferred Time: ${data.time || "N/A"}
+Notes: ${data.notes || "None"}
+  `;
+  const html = `
+    <h3>New Pooja Booking Request</h3>
+    <p>A devotee has submitted an appointment request on the website.</p>
+    <hr />
+    <p><strong>Name:</strong> ${data.name}</p>
+    <p><strong>Phone:</strong> ${data.phone}</p>
+    <p><strong>Email:</strong> ${data.email || "N/A"}</p>
+    <p><strong>City:</strong> ${data.city || "N/A"}</p>
+    <p><strong>Service:</strong> ${serviceName || "Other"}</p>
+    <p><strong>Preferred Date:</strong> ${data.date || "N/A"}</p>
+    <p><strong>Preferred Time:</strong> ${data.time || "N/A"}</p>
+    <p><strong>Notes:</strong> ${data.notes || "None"}</p>
+  `;
+
+  // Try SMTP first, fallback to Resend if SMTP is not configured but Resend is
+  if (process.env.SMTP_HOST) {
+    try {
+      const { sendEmailNotification } = await import("@/lib/notifications");
+      await sendEmailNotification({ subject, text, html });
+      return;
+    } catch (err) {
+      console.error("[bookings] SMTP notification helper failed, trying Resend fallback...", err);
+    }
+  }
+
   const apiKey = process.env.RESEND_API_KEY;
   const toEmail = process.env.ADMIN_EMAIL || "rahuljoshi031986@gmail.com";
   
   if (!apiKey) {
-    console.log("⚠️ [bookings] RESEND_API_KEY is not configured. Skipping email dispatch. Booking details:", data);
+    console.log("⚠️ [bookings] Neither SMTP nor RESEND_API_KEY is configured. Skipping email dispatch. Booking details:", data);
     return;
   }
 
@@ -31,20 +70,8 @@ async function sendBookingEmail(data, serviceName) {
       body: JSON.stringify({
         from: "Guruji Bookings <onboarding@resend.dev>",
         to: toEmail,
-        subject: `New Pooja Booking Request - ${data.name}`,
-        html: `
-          <h3>New Pooja Booking Request</h3>
-          <p>A devotee has submitted an appointment request on the website.</p>
-          <hr />
-          <p><strong>Name:</strong> ${data.name}</p>
-          <p><strong>Phone:</strong> ${data.phone}</p>
-          <p><strong>Email:</strong> ${data.email || "N/A"}</p>
-          <p><strong>City:</strong> ${data.city || "N/A"}</p>
-          <p><strong>Service:</strong> ${serviceName || "Other"}</p>
-          <p><strong>Preferred Date:</strong> ${data.date || "N/A"}</p>
-          <p><strong>Preferred Time:</strong> ${data.time || "N/A"}</p>
-          <p><strong>Notes:</strong> ${data.notes || "None"}</p>
-        `,
+        subject,
+        html,
       }),
     });
 

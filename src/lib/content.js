@@ -175,3 +175,15 @@ export async function getDailyShlokaToday() {
     return fallback;
   }
 }
+
+export async function getDailyShlokas() {
+  try {
+    const { db } = await import("@/db");
+    const { dailyShlokas } = await import("@/db/schema");
+    const rows = await db.select().from(dailyShlokas).orderBy(dailyShlokas.createdAt);
+    return rows;
+  } catch {
+    return [];
+  }
+}
+

@@ -234,6 +234,10 @@ export default function ServiceForm({ initial, serviceId }) {
       <div className="grid sm:grid-cols-2 gap-4">
         <Field label="Image URL (optional)">
           <input value={form.imageUrl || ""} onChange={(e) => update("imageUrl", e.target.value)} className="input" />
+          <FileUploadHelper
+            onUploadComplete={(url) => update("imageUrl", url)}
+            accept="image/*"
+          />
         </Field>
         <Field label="PDF / Readable Material URL (optional)">
           <input
@@ -241,6 +245,10 @@ export default function ServiceForm({ initial, serviceId }) {
             onChange={(e) => update("pdfUrl", e.target.value)}
             className="input"
             placeholder="e.g. Google Drive link to PDF"
+          />
+          <FileUploadHelper
+            onUploadComplete={(url) => update("pdfUrl", url)}
+            accept="application/pdf,image/*"
           />
         </Field>
       </div>
@@ -285,3 +293,65 @@ function Field({ label, children }) {
     </label>
   );
 }
+
+function FileUploadHelper({ onUploadComplete, accept = "image/*" }) {
+  const [uploading, setUploading] = useState(false);
+  const [error, setError] = useState("");
+
+  async function handleFileChange(e) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploading(true);
+    setError("");
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      const res = await fetch("/api/admin/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!res.ok) {
+        throw new Error("Upload failed");
+      }
+
+      const data = await res.json();
+      onUploadComplete(data.url);
+    } catch (err) {
+      setError("Failed to upload file");
+      console.error(err);
+    } finally {
+      setUploading(false);
+    }
+  }
+
+  return (
+    <div className="mt-1.5">
+      <label className="bg-ink-3 hover:bg-ink border border-ink-3 hover:border-brass/35 text-brass text-xs font-semibold px-3 py-1.5 rounded cursor-pointer transition-all inline-flex items-center gap-1.5 select-none">
+        {uploading ? (
+          <>
+            <svg className="animate-spin h-3.5 w-3.5 text-brass" fill="none" viewBox="0 0 24 24">
+              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+            </svg>
+            Uploading...
+          </>
+        ) : (
+          "📁 Upload File"
+        )}
+        <input
+          type="file"
+          accept={accept}
+          onChange={handleFileChange}
+          disabled={uploading}
+          className="hidden"
+        />
+      </label>
+      {error && <div className="text-[11px] text-sindoor-light mt-1">{error}</div>}
+    </div>
+  );
+}
+
