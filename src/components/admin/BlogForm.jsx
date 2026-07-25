@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { getAdminDict } from "@/lib/adminLang";
 
 const LANGS = [
   { key: "En", label: "English" },
@@ -13,6 +14,15 @@ export default function BlogForm({ initial, postId }) {
   const router = useRouter();
   const [activeLang, setActiveLang] = useState("En");
   const [saving, setSaving] = useState(false);
+  const [dict, setDict] = useState(getAdminDict());
+
+  useEffect(() => {
+    setDict(getAdminDict());
+    const handleLangChange = () => setDict(getAdminDict());
+    window.addEventListener("admin-lang-change", handleLangChange);
+    return () => window.removeEventListener("admin-lang-change", handleLangChange);
+  }, []);
+
   const [form, setForm] = useState(
     initial || { slug: "", titleEn: "", titleHi: "", titleMr: "", bodyEn: "", bodyHi: "", bodyMr: "", coverImageUrl: "", isPublished: false }
   );
@@ -38,7 +48,7 @@ export default function BlogForm({ initial, postId }) {
   return (
     <form onSubmit={handleSubmit} className="space-y-4 max-w-3xl">
       <label className="block">
-        <span className="block text-sm text-cream-dim mb-1">Slug (URL)</span>
+        <span className="block text-sm text-cream-dim mb-1">{dict.admin.slugBlog}</span>
         <input required value={form.slug} onChange={(e) => update("slug", e.target.value)} className="input" />
       </label>
 
@@ -56,7 +66,7 @@ export default function BlogForm({ initial, postId }) {
       </div>
 
       <label className="block">
-        <span className="block text-sm text-cream-dim mb-1">Title ({activeLang})</span>
+        <span className="block text-sm text-cream-dim mb-1">{dict.admin.titleLabel} ({activeLang})</span>
         <input
           value={form[`title${activeLang}`] || ""}
           onChange={(e) => update(`title${activeLang}`, e.target.value)}
@@ -64,7 +74,7 @@ export default function BlogForm({ initial, postId }) {
         />
       </label>
       <label className="block">
-        <span className="block text-sm text-cream-dim mb-1">Body ({activeLang})</span>
+        <span className="block text-sm text-cream-dim mb-1">{dict.admin.bodyLabel} ({activeLang})</span>
         <textarea
           rows={10}
           value={form[`body${activeLang}`] || ""}
@@ -74,7 +84,7 @@ export default function BlogForm({ initial, postId }) {
       </label>
 
       <label className="block">
-        <span className="block text-sm text-cream-dim mb-1">Cover Image URL</span>
+        <span className="block text-sm text-cream-dim mb-1">{dict.admin.coverImageLabel}</span>
         <input value={form.coverImageUrl || ""} onChange={(e) => update("coverImageUrl", e.target.value)} className="input" />
         <FileUploadHelper
           onUploadComplete={(url) => update("coverImageUrl", url)}
@@ -82,13 +92,13 @@ export default function BlogForm({ initial, postId }) {
         />
       </label>
 
-      <label className="flex items-center gap-2 text-sm text-cream-dim">
+      <label className="flex items-center gap-2 text-sm text-cream-dim cursor-pointer select-none">
         <input type="checkbox" checked={form.isPublished} onChange={(e) => update("isPublished", e.target.checked)} />
-        Published (visible on site)
+        {dict.admin.publishedLabel}
       </label>
 
-      <button type="submit" disabled={saving} className="bg-sindoor hover:bg-sindoor-light text-cream font-semibold px-6 py-2.5 rounded-md disabled:opacity-60">
-        {saving ? "Saving…" : postId ? "Save Changes" : "Create Article"}
+      <button type="submit" disabled={saving} className="bg-sindoor hover:bg-sindoor-light text-cream font-semibold px-6 py-2.5 rounded-md disabled:opacity-60 cursor-pointer select-none">
+        {saving ? dict.admin.saving : postId ? dict.admin.save : dict.admin.createArticle}
       </button>
 
       <style jsx global>{`

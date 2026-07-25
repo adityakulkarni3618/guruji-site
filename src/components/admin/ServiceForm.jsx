@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { getAdminDict } from "@/lib/adminLang";
 
 const CATEGORIES = ["pooja", "vastu", "jyotish", "gemstone", "muhurat", "reiki", "other"];
 const LANGS = [
@@ -15,6 +16,14 @@ export default function ServiceForm({ initial, serviceId }) {
   const [activeLang, setActiveLang] = useState("En");
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
+  const [dict, setDict] = useState(getAdminDict());
+
+  useEffect(() => {
+    setDict(getAdminDict());
+    const handleLangChange = () => setDict(getAdminDict());
+    window.addEventListener("admin-lang-change", handleLangChange);
+    return () => window.removeEventListener("admin-lang-change", handleLangChange);
+  }, []);
 
   const [form, setForm] = useState(
     initial || {
@@ -93,10 +102,10 @@ export default function ServiceForm({ initial, serviceId }) {
       {error && <p className="text-sindoor-light">{error}</p>}
 
       <div className="grid sm:grid-cols-2 gap-4">
-        <Field label="Slug (URL, e.g. vastu-shanti)">
+        <Field label={dict.admin.slug}>
           <input required value={form.slug} onChange={(e) => update("slug", e.target.value)} className="input" />
         </Field>
-        <Field label="Category">
+        <Field label={dict.admin.categoryLabel}>
           <select value={form.category} onChange={(e) => update("category", e.target.value)} className="input">
             {CATEGORIES.map((c) => (
               <option key={c} value={c}>{c}</option>
@@ -161,34 +170,34 @@ export default function ServiceForm({ initial, serviceId }) {
       {/* Samagri list */}
       <div>
         <div className="flex items-center justify-between mb-2">
-          <span className="text-sm text-cream-dim">Samagri Required</span>
+          <span className="text-sm text-cream-dim">{dict.admin.samagriLabel}</span>
           <button type="button" onClick={addSamagriRow} className="text-brass text-sm hover:underline">
-            + Add Item
+            {dict.admin.addItem}
           </button>
         </div>
         <div className="space-y-2">
           {form.samagri.map((item, i) => (
             <div key={i} className="grid grid-cols-[1fr_1fr_1fr_80px_32px] gap-2">
               <input
-                placeholder="Item (English)"
+                placeholder={dict.admin.itemEnglish}
                 value={item.itemEn || ""}
                 onChange={(e) => updateSamagri(i, "itemEn", e.target.value)}
                 className="input"
               />
               <input
-                placeholder="Item (हिंदी)"
+                placeholder={dict.admin.itemHindi}
                 value={item.itemHi || ""}
                 onChange={(e) => updateSamagri(i, "itemHi", e.target.value)}
                 className="input"
               />
               <input
-                placeholder="Item (मराठी)"
+                placeholder={dict.admin.itemMarathi}
                 value={item.itemMr || ""}
                 onChange={(e) => updateSamagri(i, "itemMr", e.target.value)}
                 className="input"
               />
               <input
-                placeholder="Qty"
+                placeholder={dict.admin.qty}
                 value={item.qty || ""}
                 onChange={(e) => updateSamagri(i, "qty", e.target.value)}
                 className="input"
@@ -196,7 +205,7 @@ export default function ServiceForm({ initial, serviceId }) {
               <button
                 type="button"
                 onClick={() => removeSamagriRow(i)}
-                className="text-sindoor-light"
+                className="text-sindoor-light font-bold"
               >
                 ✕
               </button>
@@ -206,7 +215,7 @@ export default function ServiceForm({ initial, serviceId }) {
       </div>
 
       <div className="grid sm:grid-cols-3 gap-4">
-        <Field label="Duration (minutes)">
+        <Field label={dict.admin.durationLabel}>
           <input
             type="number"
             value={form.durationMinutes || ""}
@@ -214,7 +223,7 @@ export default function ServiceForm({ initial, serviceId }) {
             className="input"
           />
         </Field>
-        <Field label="Price (₹, optional)">
+        <Field label={dict.admin.priceLabel}>
           <input
             type="number"
             value={form.price || ""}
@@ -222,7 +231,7 @@ export default function ServiceForm({ initial, serviceId }) {
             className="input"
           />
         </Field>
-        <Field label="Price Note (optional, e.g. 'Contact for pricing')">
+        <Field label={dict.admin.priceNoteLabel}>
           <input
             value={form.priceNote || ""}
             onChange={(e) => update("priceNote", e.target.value)}
@@ -232,14 +241,14 @@ export default function ServiceForm({ initial, serviceId }) {
       </div>
 
       <div className="grid sm:grid-cols-2 gap-4">
-        <Field label="Image URL (optional)">
+        <Field label={dict.admin.imageUrlLabel}>
           <input value={form.imageUrl || ""} onChange={(e) => update("imageUrl", e.target.value)} className="input" />
           <FileUploadHelper
             onUploadComplete={(url) => update("imageUrl", url)}
             accept="image/*"
           />
         </Field>
-        <Field label="PDF / Readable Material URL (optional)">
+        <Field label={dict.admin.pdfUrlLabel}>
           <input
             value={form.pdfUrl || ""}
             onChange={(e) => update("pdfUrl", e.target.value)}
@@ -253,21 +262,21 @@ export default function ServiceForm({ initial, serviceId }) {
         </Field>
       </div>
 
-      <label className="flex items-center gap-2 text-sm text-cream-dim">
+      <label className="flex items-center gap-2 text-sm text-cream-dim select-none cursor-pointer">
         <input
           type="checkbox"
           checked={form.isActive}
           onChange={(e) => update("isActive", e.target.checked)}
         />
-        Visible on website
+        {dict.admin.visibleLabel}
       </label>
 
       <button
         type="submit"
         disabled={saving}
-        className="bg-sindoor hover:bg-sindoor-light text-cream font-semibold px-6 py-2.5 rounded-md disabled:opacity-60"
+        className="bg-sindoor hover:bg-sindoor-light text-cream font-semibold px-6 py-2.5 rounded-md disabled:opacity-60 cursor-pointer select-none"
       >
-        {saving ? "Saving…" : serviceId ? "Save Changes" : "Create Service"}
+        {saving ? dict.admin.saving : serviceId ? dict.admin.save : dict.admin.createService}
       </button>
 
       <style jsx global>{`
