@@ -124,8 +124,11 @@ export default function MonthlyCalendar({ locale, dict }) {
       });
     }
 
-    return cells;
   }, [currentYear, currentMonth]);
+
+  const monthlyVrats = useMemo(() => {
+    return calendarCells.filter((cell) => cell && cell.event);
+  }, [calendarCells]);
 
   // Selected date panchang info
   const selectedPanchangInfo = useMemo(() => {
@@ -227,6 +230,37 @@ export default function MonthlyCalendar({ locale, dict }) {
             );
           })}
         </div>
+
+        {/* Monthly Vrat list/legend */}
+        {monthlyVrats.length > 0 && (
+          <div className="mt-6 border-t border-ink-3 pt-5">
+            <h3 className="text-sm font-semibold text-brass font-display mb-3 uppercase tracking-wider select-none">
+              {locale === "en" ? "Auspicious Dates this Month" : locale === "hi" ? "इस महीने के शुभ व्रत एवं त्योहार" : "या महिन्यातील महत्त्वाचे व्रत व सण"}
+            </h3>
+            <div className="grid sm:grid-cols-2 gap-3">
+              {monthlyVrats.map((cell) => (
+                <button
+                  key={cell.day}
+                  type="button"
+                  onClick={() => setSelectedDate(cell.date)}
+                  className="flex items-center gap-2.5 p-2 bg-ink-2/20 border border-ink-3 hover:border-brass/40 rounded transition-all cursor-pointer text-left"
+                >
+                  <span className="w-7 h-7 rounded bg-brass/10 text-brass text-xs font-bold flex items-center justify-center">
+                    {cell.day}
+                  </span>
+                  <div>
+                    <div className="text-xs font-semibold text-cream">
+                      {cell.event.label[locale] || cell.event.label.en}
+                    </div>
+                    <div className="text-[10px] text-cream-dim/85">
+                      {cell.panchangData.tithi} · {cell.panchangData.paksha} Paksha
+                    </div>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Selected Day Panchang Detail */}

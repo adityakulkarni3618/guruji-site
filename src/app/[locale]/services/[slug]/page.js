@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { getDictionary } from "@/i18n/dictionaries";
 import { getServiceBySlug, pickLang } from "@/lib/content";
 import SamagriChecklist from "@/components/SamagriChecklist";
+import AudioPlayer from "@/components/AudioPlayer";
 
 export default async function ServiceDetailPage({ params }) {
   const { locale, slug } = await params;
@@ -58,8 +59,11 @@ export default async function ServiceDetailPage({ params }) {
       )}
 
       {pickLang(service, "aarti", locale) && (
-        <div className="plaque p-6 mb-8">
-          <h2 className="text-brass text-lg mb-4 relative z-10">🕉️ Aarti / Stotra / Readings</h2>
+        <div className="plaque p-6 mb-8 space-y-4">
+          <h2 className="text-brass text-lg mb-2 relative z-10">🕉️ Aarti / Stotra / Readings</h2>
+          <div className="relative z-10 flex justify-center mb-4">
+            <AudioPlayer title={`${pickLang(service, "name", locale)} Chant`} />
+          </div>
           <pre className="relative z-10 text-cream/90 text-sm whitespace-pre-wrap font-sans leading-relaxed text-center italic bg-ink/30 p-4 rounded border border-ink-3">
             {pickLang(service, "aarti", locale)}
           </pre>

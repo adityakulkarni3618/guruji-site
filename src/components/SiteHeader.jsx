@@ -92,6 +92,7 @@ export default function SiteHeader({ locale, dict }) {
           {navLink("/gallery", dict.nav.gallery)}
           {navLink("/blog", dict.nav.blog)}
           {navLink("/shlokas", dict.nav.shlokas)}
+          {navLink("/jyotish", dict.nav.jyotish)}
           {navLink("/contact", dict.nav.contact)}
         </nav>
 
@@ -158,6 +159,7 @@ export default function SiteHeader({ locale, dict }) {
           {navLink("/gallery", dict.nav.gallery)}
           {navLink("/blog", dict.nav.blog)}
           {navLink("/shlokas", dict.nav.shlokas)}
+          {navLink("/jyotish", dict.nav.jyotish)}
           {navLink("/contact", dict.nav.contact)}
           {navLink("/book", dict.nav.book)}
         </nav>
