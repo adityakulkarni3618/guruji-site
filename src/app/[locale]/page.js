@@ -52,6 +52,28 @@ export default async function HomePage({ params }) {
         </div>
       </section>
 
+      {/* Profile & Service Posters */}
+      <section className="max-w-6xl mx-auto px-6 py-6 flex justify-center">
+        <div className="grid sm:grid-cols-2 gap-8 w-full max-w-4xl">
+          <div className="rounded-lg overflow-hidden border border-ink-3 bg-ink-2/30 shadow-lg hover:border-brass/30 transition-all duration-300 flex items-center justify-center">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img 
+              src="/poster1.jpg" 
+              alt="Guruji Rahul Joshi Card" 
+              className="w-full h-auto object-contain max-h-[500px]"
+            />
+          </div>
+          <div className="rounded-lg overflow-hidden border border-ink-3 bg-ink-2/30 shadow-lg hover:border-brass/30 transition-all duration-300 flex items-center justify-center">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img 
+              src="/poster2.jpg" 
+              alt="Guruji Rahul Joshi Services" 
+              className="w-full h-auto object-contain max-h-[500px]"
+            />
+          </div>
+        </div>
+      </section>
+
       {/* Shloka of the Day */}
       <section className="max-w-6xl mx-auto px-6 py-6 flex justify-center">
         <ShlokaCard data={shloka} locale={locale} dict={dict} />
