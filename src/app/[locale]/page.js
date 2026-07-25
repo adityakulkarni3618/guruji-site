@@ -54,7 +54,20 @@ export default async function HomePage({ params }) {
       </section>
 
       {/* Profile & Service Posters Slider */}
-      <section className="max-w-6xl mx-auto px-6 py-6 flex justify-center w-full">
+      <section className="max-w-6xl mx-auto px-6 py-10 flex flex-col items-center w-full border-t border-ink-3">
+        <div className="text-center mb-8">
+          <div className="text-brass font-display text-sm tracking-widest uppercase mb-2 select-none">
+            ॐ श्री गणेशाय नमः · ॐ श्री गुरुदेव दत्त
+          </div>
+          <h2 className="text-2xl md:text-3xl text-cream font-display">
+            {locale === "en" 
+              ? "Guruji's Profile & Services" 
+              : locale === "hi" 
+              ? "गुरुजी का परिचय एवं सेवाएं" 
+              : "गुरुजींचा परिचय आणि सेवा"}
+          </h2>
+          <div className="w-24 h-[1px] bg-brass/40 mx-auto mt-3"></div>
+        </div>
         <PosterSlider
           posters={[
             { src: "/poster1.jpg", alt: "Guruji Rahul Joshi Card" },
