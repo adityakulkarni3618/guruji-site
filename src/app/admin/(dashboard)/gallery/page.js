@@ -48,7 +48,6 @@ export default function AdminGalleryPage() {
           </select>
           <div className="flex flex-col gap-1.5">
             <input
-              required
               placeholder="Media URL"
               value={form.url}
               onChange={(e) => setForm((f) => ({ ...f, url: e.target.value }))}
