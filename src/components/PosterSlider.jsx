@@ -26,12 +26,18 @@ export default function PosterSlider({ posters }) {
       {/* Decorative Golden Top Border Accent */}
       <div className="absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-brass/10 via-brass to-brass/10 z-10"></div>
 
+      {/* Elegant Traditional Corner Accents */}
+      <div className="absolute top-3 left-3 w-4 h-4 border-t-2 border-l-2 border-brass/60 z-20"></div>
+      <div className="absolute top-3 right-3 w-4 h-4 border-t-2 border-r-2 border-brass/60 z-20"></div>
+      <div className="absolute bottom-3 left-3 w-4 h-4 border-b-2 border-l-2 border-brass/60 z-20"></div>
+      <div className="absolute bottom-3 right-3 w-4 h-4 border-b-2 border-r-2 border-brass/60 z-20"></div>
+
       {/* Main Slide Wrapper - Uses height instead of aspect-ratio to fit different image formats beautifully */}
-      <div className="relative h-[280px] sm:h-[400px] md:h-[500px] w-full flex items-center justify-center bg-black/60 rounded overflow-hidden border border-ink-3">
+      <div className="relative h-[280px] sm:h-[400px] md:h-[500px] w-full flex items-center justify-center bg-black/70 rounded overflow-hidden border border-ink-3">
         {posters.map((poster, index) => (
           <div
             key={index}
-            className={`absolute inset-0 flex items-center justify-center p-4 transition-all duration-700 ease-in-out ${
+            className={`absolute inset-0 flex items-center justify-center p-6 transition-all duration-700 ease-in-out ${
               index === activeIndex
                 ? "opacity-100 scale-100 translate-x-0 z-10"
                 : "opacity-0 scale-95 pointer-events-none translate-x-4 z-0"
@@ -41,7 +47,10 @@ export default function PosterSlider({ posters }) {
             <img
               src={poster.src}
               alt={poster.alt}
-              className="max-w-full max-h-full object-contain rounded shadow-2xl border border-ink-3"
+              className="max-w-full max-h-full object-contain rounded shadow-2xl border-4 border-cream/90 bg-white"
+              style={{
+                boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.7), 0 10px 10px -5px rgba(0, 0, 0, 0.7)",
+              }}
             />
           </div>
         ))}
@@ -50,7 +59,7 @@ export default function PosterSlider({ posters }) {
         <button
           type="button"
           onClick={prevSlide}
-          className="absolute left-3 left-center z-20 w-10 h-10 rounded-full bg-ink/80 hover:bg-brass hover:text-ink text-brass border border-brass/40 flex items-center justify-center transition-all cursor-pointer shadow-md hover:scale-105 active:scale-95 text-lg font-bold"
+          className="absolute left-4 left-center z-20 w-10 h-10 rounded-full bg-ink/90 hover:bg-brass hover:text-ink text-brass border border-brass/40 flex items-center justify-center transition-all cursor-pointer shadow-md hover:scale-105 active:scale-95 text-lg font-bold"
           aria-label="Previous Poster"
         >
           ‹
@@ -58,7 +67,7 @@ export default function PosterSlider({ posters }) {
         <button
           type="button"
           onClick={nextSlide}
-          className="absolute right-3 right-center z-20 w-10 h-10 rounded-full bg-ink/80 hover:bg-brass hover:text-ink text-brass border border-brass/40 flex items-center justify-center transition-all cursor-pointer shadow-md hover:scale-105 active:scale-95 text-lg font-bold"
+          className="absolute right-4 right-center z-20 w-10 h-10 rounded-full bg-ink/90 hover:bg-brass hover:text-ink text-brass border border-brass/40 flex items-center justify-center transition-all cursor-pointer shadow-md hover:scale-105 active:scale-95 text-lg font-bold"
           aria-label="Next Poster"
         >
           ›
