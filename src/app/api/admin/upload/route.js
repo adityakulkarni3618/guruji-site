@@ -18,7 +18,17 @@ export async function POST(request) {
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
-    const filename = `${Date.now()}-${file.name.replace(/\s+/g, "_")}`;
+    // Sanitize filename to prevent path traversal
+    const safeName = path.basename(file.name).replace(/\s+/g, "_");
+    
+    // Restrict file upload to valid image, video, or document extensions
+    const allowedExtensions = /^\.(jpg|jpeg|png|webp|gif|mp4|webm|ogg|pdf)$/i;
+    const ext = path.extname(safeName);
+    if (!allowedExtensions.test(ext)) {
+      return NextResponse.json({ error: "File type not allowed. Only images, videos, and PDFs are permitted." }, { status: 400 });
+    }
+
+    const filename = `${Date.now()}-${safeName}`;
 
     // 1. Try uploading to Supabase Storage if configured
     const supabaseUrl = process.env.SUPABASE_URL;

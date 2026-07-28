@@ -1,11 +1,11 @@
 import nodemailer from "nodemailer";
 
-export async function sendEmailNotification({ subject, text, html }) {
+export async function sendEmailNotification({ to: toOverride, subject, text, html }) {
   const host = process.env.SMTP_HOST;
   const port = process.env.SMTP_PORT;
   const user = process.env.SMTP_USER;
   const pass = process.env.SMTP_PASS;
-  const to = process.env.NOTIFICATION_EMAIL || process.env.ADMIN_EMAIL;
+  const to = toOverride || process.env.NOTIFICATION_EMAIL || process.env.ADMIN_EMAIL;
 
   if (!host || !user || !pass || !to) {
     console.log("Email Notification Config is incomplete. Skipping email dispatch.");

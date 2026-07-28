@@ -18,10 +18,23 @@ export async function POST(request) {
   const body = await request.json();
   const { db } = await import("@/db");
   const { blogPosts } = await import("@/db/schema");
+
+  const { slug, titleEn, titleHi, titleMr, bodyEn, bodyHi, bodyMr, coverImageUrl, isPublished } = body;
   const [row] = await db
     .insert(blogPosts)
-    .values({ ...body, publishedAt: body.isPublished ? new Date() : null })
+    .values({
+      slug,
+      titleEn: titleEn || null,
+      titleHi: titleHi || null,
+      titleMr: titleMr || null,
+      bodyEn: bodyEn || null,
+      bodyHi: bodyHi || null,
+      bodyMr: bodyMr || null,
+      coverImageUrl: coverImageUrl || null,
+      isPublished: isPublished ?? false,
+      publishedAt: isPublished ? new Date() : null,
+    })
     .returning();
-  revalidatePublicPages("blog", body.slug);
+  revalidatePublicPages("blog", slug);
   return NextResponse.json(row);
 }

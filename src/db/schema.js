@@ -201,3 +201,11 @@ export const dailyShlokas = pgTable("daily_shlokas", {
   displayDate: varchar("display_date", { length: 10 }), // YYYY-MM-DD
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
+
+// ---------- Newsletter Subscribers ----------
+export const subscribers = pgTable("subscribers", {
+  id: serial("id").primaryKey(),
+  email: varchar("email", { length: 160 }).notNull().unique(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+

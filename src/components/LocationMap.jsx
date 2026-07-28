@@ -2,12 +2,12 @@
 
 export default function LocationMap() {
   const address = "Behind Vidyavikas School, Shrinagar, Barshi Road, Latur, Maharashtra";
-  const googleMapsUrl = "https://www.google.com/maps/search/?api=1&query=Sai+Shakti+Jyotish+Kendra+Latur+Maharashtra";
-  const directionsUrl = "https://www.google.com/maps/dir/?api=1&destination=Sai+Shakti+Jyotish+Kendra+Shrinagar+Barshi+Road+Latur+Maharashtra";
+  const googleMapsUrl = "https://www.google.com/maps/search/?api=1&query=18.413222,76.550028";
+  const directionsUrl = "https://www.google.com/maps/dir/?api=1&destination=18.413222,76.550028";
 
-  // OpenStreetMap embed for Latur, Maharashtra (Shrinagar area)
+  // OpenStreetMap embed for Guruji's exact location (18.413222, 76.550028)
   const osmEmbedUrl =
-    "https://www.openstreetmap.org/export/embed.html?bbox=76.5580,18.4000,76.5780,18.4100&layer=mapnik&marker=18.4050,76.5680";
+    "https://www.openstreetmap.org/export/embed.html?bbox=76.5400,18.4032,76.5600,18.4232&layer=mapnik&marker=18.413222,76.550028";
 
   return (
     <div className="relative w-full rounded-2xl overflow-hidden border border-brass/20 shadow-2xl">

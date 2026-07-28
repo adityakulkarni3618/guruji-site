@@ -31,10 +31,54 @@ export async function POST(request) {
     .where(eq(panchangEntries.entryDate, body.entryDate))
     .limit(1);
 
-  const values = { ...body, isManualOverride: true, updatedAt: new Date() };
+  const {
+    entryDate,
+    tithi,
+    nakshatra,
+    yoga,
+    karan,
+    paksha,
+    sunrise,
+    sunset,
+    moonrise,
+    moonset,
+    rahuKaalStart,
+    rahuKaalEnd,
+    gulikaKaalStart,
+    gulikaKaalEnd,
+    yamaganda_start,
+    yamagandaEnd,
+    shubhMuhuratNoteEn,
+    shubhMuhuratNoteHi,
+    shubhMuhuratNoteMr,
+  } = body;
+
+  const values = {
+    entryDate,
+    tithi: tithi || null,
+    nakshatra: nakshatra || null,
+    yoga: yoga || null,
+    karan: karan || null,
+    paksha: paksha || null,
+    sunrise: sunrise || null,
+    sunset: sunset || null,
+    moonrise: moonrise || null,
+    moonset: moonset || null,
+    rahuKaalStart: rahuKaalStart || null,
+    rahuKaalEnd: rahuKaalEnd || null,
+    gulikaKaalStart: gulikaKaalStart || null,
+    gulikaKaalEnd: gulikaKaalEnd || null,
+    yamaganda_start: yamaganda_start || null,
+    yamagandaEnd: yamagandaEnd || null,
+    shubhMuhuratNoteEn: shubhMuhuratNoteEn || null,
+    shubhMuhuratNoteHi: shubhMuhuratNoteHi || null,
+    shubhMuhuratNoteMr: shubhMuhuratNoteMr || null,
+    isManualOverride: true,
+    updatedAt: new Date(),
+  };
 
   const row = existing[0]
-    ? (await db.update(panchangEntries).set(values).where(eq(panchangEntries.entryDate, body.entryDate)).returning())[0]
+    ? (await db.update(panchangEntries).set(values).where(eq(panchangEntries.entryDate, entryDate)).returning())[0]
     : (await db.insert(panchangEntries).values(values).returning())[0];
 
   return NextResponse.json(row);

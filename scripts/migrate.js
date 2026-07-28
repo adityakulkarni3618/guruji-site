@@ -23,6 +23,16 @@ async function main() {
   `;
   
   console.log("Table daily_shlokas created successfully!");
+
+  console.log("Creating subscribers table if not exists...");
+  await sql`
+    CREATE TABLE IF NOT EXISTS subscribers (
+      id SERIAL PRIMARY KEY,
+      email VARCHAR(160) NOT NULL UNIQUE,
+      created_at TIMESTAMP DEFAULT NOW() NOT NULL
+    );
+  `;
+  console.log("Table subscribers created successfully!");
   await sql.end();
 }
 

@@ -7,6 +7,7 @@ import { getServices, getTestimonials, pickLang, getDailyShlokaToday } from "@/l
 import PanchangCard from "@/components/PanchangCard";
 import ShlokaCard from "@/components/ShlokaCard";
 import PosterSlider from "@/components/PosterSlider";
+import NewsletterSubscription from "@/components/NewsletterSubscription";
 
 export default async function HomePage({ params }) {
   const { locale } = await params;
@@ -121,6 +122,11 @@ export default async function HomePage({ params }) {
             </div>
           ))}
         </div>
+      </section>
+
+      {/* Newsletter Subscription */}
+      <section className="border-t border-ink-3/40 pt-4">
+        <NewsletterSubscription locale={locale} />
       </section>
     </div>
   );

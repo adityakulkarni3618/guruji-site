@@ -16,6 +16,18 @@ export async function POST(request) {
   const body = await request.json();
   const { db } = await import("@/db");
   const { muhuratDates } = await import("@/db/schema");
-  const [row] = await db.insert(muhuratDates).values(body).returning();
+
+  const { eventType, eventDate, timeWindow, noteEn, noteHi, noteMr } = body;
+  const [row] = await db
+    .insert(muhuratDates)
+    .values({
+      eventType,
+      eventDate,
+      timeWindow: timeWindow || null,
+      noteEn: noteEn || null,
+      noteHi: noteHi || null,
+      noteMr: noteMr || null,
+    })
+    .returning();
   return NextResponse.json(row);
 }

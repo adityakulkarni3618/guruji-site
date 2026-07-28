@@ -17,7 +17,19 @@ export async function POST(request) {
   const body = await request.json();
   const { db } = await import("@/db");
   const { galleryItems } = await import("@/db/schema");
-  const [row] = await db.insert(galleryItems).values(body).returning();
+
+  const { mediaType, url, captionEn, captionHi, captionMr, sortOrder } = body;
+  const [row] = await db
+    .insert(galleryItems)
+    .values({
+      mediaType: mediaType || "image",
+      url,
+      captionEn: captionEn || null,
+      captionHi: captionHi || null,
+      captionMr: captionMr || null,
+      sortOrder: sortOrder ? Number(sortOrder) : 0,
+    })
+    .returning();
   revalidatePublicPages("gallery");
   return NextResponse.json(row);
 }

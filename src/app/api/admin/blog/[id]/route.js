@@ -21,12 +21,27 @@ export async function PUT(request, { params }) {
   const { db } = await import("@/db");
   const { blogPosts } = await import("@/db/schema");
   const { eq } = await import("drizzle-orm");
+  const { slug, titleEn, titleHi, titleMr, bodyEn, bodyHi, bodyMr, coverImageUrl, isPublished } = body;
+  const updateFields = {};
+  if (slug !== undefined) updateFields.slug = slug;
+  if (titleEn !== undefined) updateFields.titleEn = titleEn || null;
+  if (titleHi !== undefined) updateFields.titleHi = titleHi || null;
+  if (titleMr !== undefined) updateFields.titleMr = titleMr || null;
+  if (bodyEn !== undefined) updateFields.bodyEn = bodyEn || null;
+  if (bodyHi !== undefined) updateFields.bodyHi = bodyHi || null;
+  if (bodyMr !== undefined) updateFields.bodyMr = bodyMr || null;
+  if (coverImageUrl !== undefined) updateFields.coverImageUrl = coverImageUrl || null;
+  if (isPublished !== undefined) {
+    updateFields.isPublished = isPublished;
+    updateFields.publishedAt = isPublished ? new Date() : null;
+  }
+
   const [row] = await db
     .update(blogPosts)
-    .set({ ...body, publishedAt: body.isPublished ? new Date() : null })
+    .set(updateFields)
     .where(eq(blogPosts.id, Number(id)))
     .returning();
-  revalidatePublicPages("blog", row?.slug || body.slug);
+  revalidatePublicPages("blog", row?.slug || slug);
   return NextResponse.json(row);
 }
 

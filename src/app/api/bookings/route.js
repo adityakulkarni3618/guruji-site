@@ -86,6 +86,70 @@ Notes: ${data.notes || "None"}
   }
 }
 
+async function sendDevoteeConfirmation(data, serviceName) {
+  if (!data.email) return;
+
+  const subject = `Booking Request Received - Sai Shakti Jyotish Kendra`;
+  const text = `
+Namaste ${data.name},
+
+We have received your appointment request on the website. Here are the details you submitted:
+
+• Service: ${serviceName || "Other"}
+• Preferred Date: ${data.date || "N/A"}
+• Preferred Time: ${data.time || "N/A"}
+
+Guruji's team will contact you shortly to confirm your booking.
+
+Best regards,
+Sai Shakti Jyotish Kendra
+Latur, Maharashtra
+  `;
+  const html = `
+    <h3>Namaste ${data.name},</h3>
+    <p>We have received your appointment request on the website. Here are the details you submitted:</p>
+    <hr />
+    <p><strong>Service:</strong> ${serviceName || "Other"}</p>
+    <p><strong>Preferred Date:</strong> ${data.date || "N/A"}</p>
+    <p><strong>Preferred Time:</strong> ${data.time || "N/A"}</p>
+    <hr />
+    <p>Guruji's team will contact you shortly to confirm your booking.</p>
+    <br />
+    <p>Best regards,<br /><strong>Sai Shakti Jyotish Kendra</strong><br />Latur, Maharashtra</p>
+  `;
+
+  if (process.env.SMTP_HOST) {
+    try {
+      const { sendEmailNotification } = await import("@/lib/notifications");
+      await sendEmailNotification({ to: data.email, subject, text, html });
+      return;
+    } catch (err) {
+      console.error("[bookings] Devotee SMTP confirmation failed, trying Resend...", err);
+    }
+  }
+
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) return;
+
+  try {
+    await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${apiKey}`,
+      },
+      body: JSON.stringify({
+        from: "Guruji Bookings <onboarding@resend.dev>",
+        to: data.email,
+        subject,
+        html,
+      }),
+    });
+  } catch (err) {
+    console.error("[bookings] Devotee Resend confirmation failed:", err.message);
+  }
+}
+
 export async function POST(request) {
   const body = await request.json();
   const parsed = bookingSchema.safeParse(body);
@@ -122,12 +186,14 @@ export async function POST(request) {
 
     // Trigger email notification in background
     sendBookingEmail(data, serviceName);
+    sendDevoteeConfirmation(data, serviceName);
 
     return NextResponse.json({ ok: true });
   } catch (err) {
     console.error("[bookings] DB not configured or insert failed:", err.message);
     // Trigger background email even if DB insert fails in demo mode
     sendBookingEmail(data, "Other Pooja");
+    sendDevoteeConfirmation(data, "Other Pooja");
     return NextResponse.json({ ok: true, warning: "not_persisted" });
   }
 }

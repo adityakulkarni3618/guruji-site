@@ -14,11 +14,12 @@ export default function BookingForm({ dict, services, preselectedService, initia
     time: initialTime,
     notes: "",
   });
-
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (initialDate) setForm((f) => ({ ...f, date: initialDate }));
   }, [initialDate]);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (initialTime) setForm((f) => ({ ...f, time: initialTime }));
   }, [initialTime]);
@@ -125,6 +126,7 @@ export default function BookingForm({ dict, services, preselectedService, initia
           ))}
         </select>
       </Field>
+
       <div className="grid grid-cols-2 gap-4">
         <Field label={dict.booking.date}>
           <input type="date" value={form.date} onChange={(e) => update("date", e.target.value)} className="input" />

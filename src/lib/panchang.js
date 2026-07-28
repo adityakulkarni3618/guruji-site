@@ -141,7 +141,7 @@ export function calculatePanchang(date, latitude, longitude) {
 // Default location: Latur, Maharashtra (Guruji's location). Update if the
 // business location changes.
 export const DEFAULT_LOCATION = {
-  latitude: 18.4088,
-  longitude: 76.5604,
+  latitude: 18.413222,
+  longitude: 76.550028,
   name: "Latur, Maharashtra",
 };

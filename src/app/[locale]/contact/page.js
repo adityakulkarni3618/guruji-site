@@ -16,7 +16,7 @@ export default async function ContactPage({ params }) {
       ),
       label: locale === "en" ? "Address" : locale === "hi" ? "पता" : "पत्ता",
       value: "Behind Vidyavikas School, Shrinagar, Barshi Road, Latur, Maharashtra",
-      href: "https://www.google.com/maps/search/?api=1&query=Sai+Shakti+Jyotish+Kendra+Latur+Maharashtra",
+      href: "https://www.google.com/maps/search/?api=1&query=18.413222,76.550028",
     },
     {
       icon: (

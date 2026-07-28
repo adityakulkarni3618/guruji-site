@@ -80,6 +80,8 @@ export default function BookingCalendar({ locale, dict, onSelect }) {
   const calendarCells = useMemo(() => {
     const firstDayIndex = new Date(currentYear, currentMonth, 1).getDay();
     const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+    const memoToday = new Date();
+    const todayStart = new Date(memoToday.getFullYear(), memoToday.getMonth(), memoToday.getDate());
 
     const cells = [];
     for (let i = 0; i < firstDayIndex; i++) {
@@ -88,10 +90,10 @@ export default function BookingCalendar({ locale, dict, onSelect }) {
 
     for (let day = 1; day <= daysInMonth; day++) {
       const date = new Date(currentYear, currentMonth, day);
-      const isPast = new Date(date.getFullYear(), date.getMonth(), date.getDate()) < new Date(today.getFullYear(), today.getMonth(), today.getDate());
+      const isPast = new Date(date.getFullYear(), date.getMonth(), date.getDate()) < todayStart;
       
-      // Sundays are generally busy, simulate availability
-      const isBooked = date.getDay() === 0;
+      // Allow bookings on all days (Sundays are no longer blocked)
+      const isBooked = false;
 
       cells.push({
         day,
@@ -103,7 +105,7 @@ export default function BookingCalendar({ locale, dict, onSelect }) {
     }
 
     return cells;
-  }, [currentYear, currentMonth]);
+  }, [currentYear, currentMonth, locale]);
 
   function handleDateClick(cell) {
     if (cell.isPast || cell.isBooked) return;

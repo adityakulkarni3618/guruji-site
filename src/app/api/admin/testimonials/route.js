@@ -18,7 +18,21 @@ export async function POST(request) {
   const body = await request.json();
   const { db } = await import("@/db");
   const { testimonials } = await import("@/db/schema");
-  const [row] = await db.insert(testimonials).values(body).returning();
+
+  const { customerName, city, photoUrl, textEn, textHi, textMr, rating, isApproved } = body;
+  const [row] = await db
+    .insert(testimonials)
+    .values({
+      customerName,
+      city: city || null,
+      photoUrl: photoUrl || null,
+      textEn: textEn || null,
+      textHi: textHi || null,
+      textMr: textMr || null,
+      rating: rating !== undefined ? Number(rating) : 5,
+      isApproved: isApproved ?? false,
+    })
+    .returning();
   revalidatePublicPages("testimonial");
   return NextResponse.json(row);
 }
