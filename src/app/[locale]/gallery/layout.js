@@ -5,8 +5,10 @@ async function getGallery() {
   try {
     const { db } = await import("@/db");
     const { galleryItems } = await import("@/db/schema");
-    return await db.select().from(galleryItems);
-  } catch {
+    const { desc } = await import("drizzle-orm");
+    return await db.select().from(galleryItems).orderBy(desc(galleryItems.createdAt));
+  } catch (err) {
+    console.error("Failed to load gallery items in layout:", err);
     return [];
   }
 }

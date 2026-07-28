@@ -7,7 +7,8 @@ export async function GET(request) {
   if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   const { db } = await import("@/db");
   const { galleryItems } = await import("@/db/schema");
-  const rows = await db.select().from(galleryItems);
+  const { desc } = await import("drizzle-orm");
+  const rows = await db.select().from(galleryItems).orderBy(desc(galleryItems.createdAt));
   return NextResponse.json(rows);
 }
 
